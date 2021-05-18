@@ -19,7 +19,13 @@ export const postCreateArt = createAsyncThunk(
       return rejectWithValue();
     } else {
       dispatch(setValidationErrors([]));
-      return await postCreateArtApi(art);
+      const data = await postCreateArtApi(art);
+
+      if (data?.success) {
+        return data;
+      } else {
+        return rejectWithValue();
+      }
     }
   }
 );
