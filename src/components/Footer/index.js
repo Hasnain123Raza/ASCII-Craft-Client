@@ -7,7 +7,7 @@ export default function () {
     <div className="footer pbc p-3">
       <Container fluid>
         {/* Columns have extra divs to hold link items so that the link items don't span the entire width of the column. */}
-        <Row style={{ "text-align": "center" }}>
+        <Row style={{ textAlign: "center" }}>
           <Col md>
             <h5>ASCII-CRAFT</h5>
             <div className="d-flex flex-column">

@@ -1,15 +1,18 @@
 export default function ({
   initiateLoadingRequest,
   loadingRequestStatus,
+  idleComponent: Idle,
   pendingComponent: Pending,
   rejectedComponent: Rejected,
   fulfilledComponent: Fulfilled,
 }) {
-  return loadingRequestStatus == "pending" ? (
+  return loadingRequestStatus === "idle" ? (
+    <Idle initiateLoadingRequest={initiateLoadingRequest} />
+  ) : loadingRequestStatus === "pending" ? (
     <Pending />
-  ) : loadingRequestStatus == "rejected" ? (
+  ) : loadingRequestStatus === "rejected" ? (
     <Rejected initiateLoadingRequest={initiateLoadingRequest} />
-  ) : loadingRequestStatus == "fulfilled" ? (
+  ) : loadingRequestStatus === "fulfilled" ? (
     <Fulfilled />
   ) : (
     "Default"

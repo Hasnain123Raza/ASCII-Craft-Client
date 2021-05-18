@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function () {
   return (
-    <div className="app d-flex flex-column" style={{ "min-height": "100vh" }}>
+    <div className="app d-flex flex-column" style={{ minHeight: "100vh" }}>
       <Header />
       <Main />
       <Footer />
