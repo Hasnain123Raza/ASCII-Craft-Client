@@ -8,7 +8,7 @@ import Authentication from "../../areas/Authentication";
 export default function () {
   return (
     <div className="main d-flex flex-column" style={{ flex: 1 }}>
-      <Container className="mt-3 d-flex flex-column" style={{ flex: 1 }}>
+      <Container className="my-3 d-flex flex-column" style={{ flex: 1 }}>
         <Switch>
           {Account()}
           {Art()}

@@ -77,7 +77,7 @@ export default function () {
         initiateLoadingRequest={initiateLoadingRequest}
         loadingRequestStatus={loadingRequestStatus}
         fulfilledComponent={() => (
-          <Container className="mb-3" fluid>
+          <Container className="mb-2" fluid>
             {rows.map((row, rowIndex) => (
               <Row key={rowIndex}>
                 {row.map((art, artIndex) => (
