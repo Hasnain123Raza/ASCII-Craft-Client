@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import useQuery from "../../../../services/hooks/useQuery.js";
 import { useEffect } from "react";
 
 import { Container, Row, Col } from "react-bootstrap";
@@ -27,6 +29,9 @@ const totalRows = 4;
 
 export default function () {
   const dispatch = useDispatch();
+  const query = useQuery();
+  const history = useHistory();
+  const location = useLocation();
 
   const artCount = useSelector(selectArtCount);
   const currentPage = useSelector(selectCurrentPage);
@@ -38,6 +43,16 @@ export default function () {
     totalRows,
     simplifiedArts
   );
+
+  const parsedQueriedPage = parseInt(query.get("page"));
+  const queriedPage =
+    isNaN(parsedQueriedPage) ||
+    parsedQueriedPage < 1 ||
+    parsedQueriedPage > totalPages
+      ? 1
+      : parsedQueriedPage;
+
+  if (queriedPage !== currentPage) dispatch(setCurrentPage(queriedPage));
 
   const getArtCountRequestStatus = useSelector(selectGetArtCountRequestStatus);
   const getSimplifiedArtsRequestStatus = useSelector(
@@ -96,7 +111,10 @@ export default function () {
         className="mt-auto"
         currentPage={currentPage}
         totalPages={totalPages}
-        pageChangeCallback={(newPage) => dispatch(setCurrentPage(newPage))}
+        pageChangeCallback={(newPage) => {
+          query.set("page", newPage);
+          history.push(location.pathname + "?" + query.toString());
+        }}
       />
     </div>
   );
