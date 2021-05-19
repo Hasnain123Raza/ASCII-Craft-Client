@@ -46,61 +46,58 @@ export default function () {
 
   return (
     <div className="art-create d-flex flex-column" style={{ flex: 1 }}>
-      <h2 className="mb-3" style={{ textAlign: "center" }}>
-        Art Editor
-      </h2>
+      <div>
+        <h2 className="mb-3" style={{ textAlign: "center" }}>
+          Art Editor
+        </h2>
+        <hr />
+      </div>
 
-      <Card>
-        <Card.Body>
-          <Form>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Title"
-                value={title}
-                isInvalid={Boolean(titleError)}
-                onChange={(event) => dispatch(setTitle(event.target.value))}
-              />
-              <Form.Control.Feedback type="invalid">
-                {titleError}
-              </Form.Control.Feedback>
-            </Form.Group>
+      <Form>
+        <Form.Group controlId="title">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Title"
+            value={title}
+            isInvalid={Boolean(titleError)}
+            onChange={(event) => dispatch(setTitle(event.target.value))}
+          />
+          <Form.Control.Feedback type="invalid">
+            {titleError}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Description"
-                value={description}
-                isInvalid={Boolean(descriptionError)}
-                onChange={(event) =>
-                  dispatch(setDescription(event.target.value))
-                }
-              />
-              <Form.Control.Feedback type="invalid">
-                {descriptionError}
-              </Form.Control.Feedback>
-            </Form.Group>
+        <Form.Group controlId="description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Description"
+            value={description}
+            isInvalid={Boolean(descriptionError)}
+            onChange={(event) => dispatch(setDescription(event.target.value))}
+          />
+          <Form.Control.Feedback type="invalid">
+            {descriptionError}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-            <Form.Group controlId="content">
-              <Form.Label>Content</Form.Label>
-              <Form.Control
-                autoComplete="off"
-                as="textarea"
-                rows={3}
-                placeholder="Content"
-                value={content}
-                isInvalid={Boolean(contentError)}
-                onChange={(event) => dispatch(setContent(event.target.value))}
-              />
-              <Form.Control.Feedback type="invalid">
-                {contentError}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form>
-        </Card.Body>
-      </Card>
+        <Form.Group controlId="content">
+          <Form.Label>Content</Form.Label>
+          <Form.Control
+            autoComplete="off"
+            as="textarea"
+            rows={3}
+            placeholder="Content"
+            value={content}
+            isInvalid={Boolean(contentError)}
+            onChange={(event) => dispatch(setContent(event.target.value))}
+          />
+          <Form.Control.Feedback type="invalid">
+            {contentError}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Form>
 
       <div className="my-4 d-flex">
         <Button variant="primary" onClick={() => dispatch(resetArt())}>

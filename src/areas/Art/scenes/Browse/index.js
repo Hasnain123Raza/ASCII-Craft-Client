@@ -79,6 +79,7 @@ export default function () {
         fulfilledComponent={() => (
           <Container className="mb-2" fluid>
             <h2 style={{ textAlign: "center" }}>Art Browser</h2>
+            <hr />
             {rows.map((row, rowIndex) => (
               <Row key={rowIndex}>
                 {row.map((art, artIndex) => (
