@@ -2,9 +2,14 @@ import MinimalPagination from "./components/MinimalPagination";
 import CollapsedPagination from "./components/CollapsedPagination";
 import ExpandedPagination from "./components/ExpandedPagination";
 
-export default function ({ currentPage, totalPages, pageChangeCallback }) {
+export default function ({
+  className,
+  currentPage,
+  totalPages,
+  pageChangeCallback,
+}) {
   return (
-    <div className="paginator d-flex justify-content-center">
+    <div className={"paginator d-flex justify-content-center " + className}>
       {totalPages <= 3 ? (
         <MinimalPagination
           currentPage={currentPage}

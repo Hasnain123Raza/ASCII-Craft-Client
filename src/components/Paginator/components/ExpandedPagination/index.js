@@ -39,7 +39,7 @@ function generatePrevPagination({ currentPage, pageChangeCallback }) {
   return <Pagination.Prev onClick={() => pageChangeCallback(newPageValue)} />;
 }
 
-function generateLeftEllipse(totalPages, currentPage, pageChangeCallback) {
+function generateLeftEllipse({ totalPages, currentPage, pageChangeCallback }) {
   return (
     shouldGenerateLeftEllipsis(totalPages, currentPage) && (
       <Pagination.Ellipsis
@@ -91,15 +91,13 @@ function generateNextPagination({
   return <Pagination.Next onClick={() => pageChangeCallback(newPageValue)} />;
 }
 
-function generateLastPagination(totalPages, pageChangeCallback) {
+function generateLastPagination({ totalPages, pageChangeCallback }) {
   return <Pagination.Last onClick={() => pageChangeCallback(totalPages)} />;
 }
 
-export default function ExpandedPagination({
-  totalPages,
-  currentPage,
-  pageChangeCallback,
-}) {
+export default function ExpandedPagination(props) {
+  const { totalPages, currentPage, pageChangeCallback } = props;
+
   return (
     <Pagination>
       {generateFirstPagination(props)}

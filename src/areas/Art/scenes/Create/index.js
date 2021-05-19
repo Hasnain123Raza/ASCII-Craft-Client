@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 import {
@@ -45,78 +45,76 @@ export default function () {
   }, []);
 
   return (
-    <div className="art-create">
-      <Container className="my-4">
-        <h2 className="mb-3" style={{ textAlign: "center" }}>
-          ASCII-CRAFT Art Editor
-        </h2>
+    <div className="art-create d-flex flex-column" style={{ flex: 1 }}>
+      <h2 className="mb-3" style={{ textAlign: "center" }}>
+        ASCII-CRAFT Art Editor
+      </h2>
 
-        <Card>
-          <Card.Body>
-            <Form>
-              <Form.Group controlId="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Title"
-                  value={title}
-                  isInvalid={Boolean(titleError)}
-                  onChange={(event) => dispatch(setTitle(event.target.value))}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {titleError}
-                </Form.Control.Feedback>
-              </Form.Group>
+      <Card>
+        <Card.Body>
+          <Form>
+            <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                value={title}
+                isInvalid={Boolean(titleError)}
+                onChange={(event) => dispatch(setTitle(event.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">
+                {titleError}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-              <Form.Group controlId="description">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Description"
-                  value={description}
-                  isInvalid={Boolean(descriptionError)}
-                  onChange={(event) =>
-                    dispatch(setDescription(event.target.value))
-                  }
-                />
-                <Form.Control.Feedback type="invalid">
-                  {descriptionError}
-                </Form.Control.Feedback>
-              </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Description"
+                value={description}
+                isInvalid={Boolean(descriptionError)}
+                onChange={(event) =>
+                  dispatch(setDescription(event.target.value))
+                }
+              />
+              <Form.Control.Feedback type="invalid">
+                {descriptionError}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-              <Form.Group controlId="content">
-                <Form.Label>Content</Form.Label>
-                <Form.Control
-                  autoComplete="off"
-                  as="textarea"
-                  rows={3}
-                  placeholder="Content"
-                  value={content}
-                  isInvalid={Boolean(contentError)}
-                  onChange={(event) => dispatch(setContent(event.target.value))}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {contentError}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form>
-          </Card.Body>
-        </Card>
+            <Form.Group controlId="content">
+              <Form.Label>Content</Form.Label>
+              <Form.Control
+                autoComplete="off"
+                as="textarea"
+                rows={3}
+                placeholder="Content"
+                value={content}
+                isInvalid={Boolean(contentError)}
+                onChange={(event) => dispatch(setContent(event.target.value))}
+              />
+              <Form.Control.Feedback type="invalid">
+                {contentError}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+        </Card.Body>
+      </Card>
 
-        <div className="my-4 d-flex">
-          <Button variant="primary" onClick={() => dispatch(resetArt())}>
-            New
-          </Button>
+      <div className="my-4 d-flex">
+        <Button variant="primary" onClick={() => dispatch(resetArt())}>
+          New
+        </Button>
 
-          <PostRequestButton
-            className="ml-auto"
-            initiateLoadingRequest={() => dispatch(postCreateArt(art))}
-            loadingRequestStatus={postCreateArtRequestStatus}
-            idleText="Create"
-            redirectLink="/art/open"
-          />
-        </div>
-      </Container>
+        <PostRequestButton
+          className="ml-auto"
+          initiateLoadingRequest={() => dispatch(postCreateArt(art))}
+          loadingRequestStatus={postCreateArtRequestStatus}
+          idleText="Create"
+          redirectLink="/art/open"
+        />
+      </div>
     </div>
   );
 }

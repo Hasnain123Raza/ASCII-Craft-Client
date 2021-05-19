@@ -22,11 +22,9 @@ function generateCollapsedPages({
   );
 }
 
-function generateNextPagination({
-  totalPages,
-  currentPage,
-  pageChangeCallback,
-}) {
+function generateNextPagination(props) {
+  const { totalPages, currentPage, pageChangeCallback } = props;
+
   let newPageValue = currentPage + 1;
   if (newPageValue >= totalPages) {
     newPageValue = totalPages;
