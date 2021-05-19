@@ -8,8 +8,6 @@ import {
 } from "../../services/artBrowseSlice/selectors";
 
 export default function ({ index }) {
-  console.log(index);
-
   const title = useSelector(selectSimplifiedArtTitleByIndex(index));
   const description = useSelector(selectSimplifiedArtDescriptionByIndex(index));
 

@@ -47,7 +47,7 @@ export default function () {
   return (
     <div className="art-create d-flex flex-column" style={{ flex: 1 }}>
       <h2 className="mb-3" style={{ textAlign: "center" }}>
-        ASCII-CRAFT Art Editor
+        Art Editor
       </h2>
 
       <Card>
