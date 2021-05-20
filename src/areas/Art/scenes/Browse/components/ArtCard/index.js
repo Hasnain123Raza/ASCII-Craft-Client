@@ -1,13 +1,20 @@
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import useQuery from "../../../../../../services/hooks/useQuery.js";
 
 import { Card, Button } from "react-bootstrap";
 
 import {
+  selectSimplifiedArtIdByIndex,
   selectSimplifiedArtTitleByIndex,
   selectSimplifiedArtDescriptionByIndex,
 } from "../../services/artBrowseSlice/selectors";
 
 export default function ({ index }) {
+  const history = useHistory();
+  const query = useQuery();
+
+  const id = useSelector(selectSimplifiedArtIdByIndex(index));
   const title = useSelector(selectSimplifiedArtTitleByIndex(index));
   const description = useSelector(selectSimplifiedArtDescriptionByIndex(index));
 
@@ -19,7 +26,14 @@ export default function ({ index }) {
         {description}
       </Card.Body>
       <Card.Footer>
-        <Button className="w-100" variant="success">
+        <Button
+          className="w-100"
+          variant="success"
+          onClick={() => {
+            query.set("artId", id);
+            history.push("/art/open?" + query.toString());
+          }}
+        >
           Open
         </Button>
       </Card.Footer>

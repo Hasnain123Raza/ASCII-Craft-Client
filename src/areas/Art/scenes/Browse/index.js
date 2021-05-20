@@ -11,6 +11,7 @@ import Paginator from "../../../../components/Paginator";
 import {
   getArtCount,
   getSimplifiedArts,
+  loadResources,
   reset,
   setCurrentPage,
 } from "./services/artBrowseSlice";
@@ -18,8 +19,7 @@ import {
   selectArtCount,
   selectCurrentPage,
   selectSimplifiedArts,
-  selectGetArtCountRequestStatus,
-  selectGetSimplifiedArtsRequestStatus,
+  selectLoadingRequestStatus,
 } from "./services/artBrowseSlice/selectors.js";
 
 import { getTotalPages, getRowsFromSimplifiedArts } from "./services/grid.js";
@@ -51,31 +51,20 @@ export default function () {
     parsedQueriedPage > totalPages
       ? 1
       : parsedQueriedPage;
+  const pageConflict = artCount === -1 ? false : queriedPage !== currentPage;
 
-  if (queriedPage !== currentPage) dispatch(setCurrentPage(queriedPage));
-
-  const getArtCountRequestStatus = useSelector(selectGetArtCountRequestStatus);
-  const getSimplifiedArtsRequestStatus = useSelector(
-    selectGetSimplifiedArtsRequestStatus
-  );
+  if (pageConflict) dispatch(setCurrentPage(queriedPage));
 
   const initiateLoadingRequest = () => {
-    if (artCount === -1) dispatch(getArtCount());
     dispatch(
-      getSimplifiedArts({
+      loadResources({
         pageOffset: currentPage - 1,
         pageSize: cardsPerRow * totalRows,
+        queriedPage,
       })
     );
   };
-  const loadingRequestStatus =
-    getArtCountRequestStatus === "rejected" ||
-    getSimplifiedArtsRequestStatus === "rejected"
-      ? "rejected"
-      : getArtCountRequestStatus === "fulfilled" &&
-        getSimplifiedArtsRequestStatus === "fulfilled"
-      ? "fulfilled"
-      : "pending";
+  const loadingRequestStatus = useSelector(selectLoadingRequestStatus);
 
   useEffect(() => {
     initiateLoadingRequest();

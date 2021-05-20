@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getArtCountApi, getSimplifiedArtsApi } from "./api.js";
+import { selectArtCount, selectCurrentPage } from "./selectors.js";
 
 export const getArtCount = createAsyncThunk(
   "browse/getArtCount",
@@ -25,6 +26,18 @@ export const getSimplifiedArts = createAsyncThunk(
     } else {
       return payload;
     }
+  }
+);
+
+export const loadResources = createAsyncThunk(
+  "browse/loadResources",
+  async ({ pageOffset, pageSize, queriedPage }, { getState, dispatch }) => {
+    const hasLoadedArtCount = selectArtCount(getState()) !== -1;
+    if (!hasLoadedArtCount) await dispatch(getArtCount());
+
+    const isPageConflict = selectCurrentPage(getState()) !== queriedPage;
+    if (!isPageConflict)
+      await dispatch(getSimplifiedArts({ pageOffset, pageSize }));
   }
 );
 

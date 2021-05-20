@@ -3,6 +3,7 @@ import { Card, Button } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
 
 import { getArt, reset } from "./services/artOpenSlice";
@@ -15,6 +16,7 @@ import {
 
 export default function () {
   const dispatch = useDispatch();
+  const history = useHistory();
   const query = useQuery();
 
   const queriedArtId = query.get("artId");
@@ -52,7 +54,15 @@ export default function () {
             </Card>
 
             <div className="my-4 d-flex">
-              <Button variant="primary">Back</Button>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  query.delete("artId");
+                  history.push("/art/browse?" + query.toString());
+                }}
+              >
+                Back
+              </Button>
             </div>
           </div>
         )}
