@@ -58,6 +58,7 @@ export default function () {
   const getSimplifiedArtsRequestStatus = useSelector(
     selectGetSimplifiedArtsRequestStatus
   );
+
   const initiateLoadingRequest = () => {
     if (artCount === -1) dispatch(getArtCount());
     dispatch(

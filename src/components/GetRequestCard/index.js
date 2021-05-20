@@ -11,7 +11,7 @@ export default function ({
     <Resource
       initiateLoadingRequest={initiateLoadingRequest}
       loadingRequestStatus={loadingRequestStatus}
-      idleComponent={() => "Default"}
+      idleComponent={PendingCard}
       pendingComponent={PendingCard}
       rejectedComponent={RejectedCard}
       fulfilledComponent={fulfilledComponent}
