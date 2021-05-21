@@ -8,6 +8,5 @@ export async function postCreateArtApi(art) {
   });
 
   const data = await response.json();
-
   return data;
 }

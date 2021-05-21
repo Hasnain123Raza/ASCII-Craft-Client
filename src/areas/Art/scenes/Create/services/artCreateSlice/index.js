@@ -21,7 +21,7 @@ export const postCreateArt = createAsyncThunk(
       dispatch(setValidationErrors([]));
       const data = await postCreateArtApi(art);
 
-      if (data?.success) {
+      if (data.success) {
         return data;
       } else {
         return rejectWithValue();
