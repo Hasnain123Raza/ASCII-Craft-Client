@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { postRegisterUserApi } from "./api.js";
+import { postLoginUserApi } from "./api.js";
 import userSchema from "../../../../services/userSchema.js";
 
-export const postRegisterUser = createAsyncThunk(
-  "register/postRegisterUser",
+export const postLoginUser = createAsyncThunk(
+  "login/postLoginUser",
   async (user, { dispatch, rejectWithValue }) => {
     const validationResult = userSchema.validate(user, { abortEarly: false });
 
@@ -19,7 +19,7 @@ export const postRegisterUser = createAsyncThunk(
       return rejectWithValue();
     } else {
       dispatch(setValidationErrors([]));
-      const data = await postRegisterUserApi(user);
+      const data = await postLoginUserApi(user);
 
       if (data.success) {
         return data;
@@ -36,12 +36,12 @@ export const postRegisterUser = createAsyncThunk(
 const initialState = {
   username: "",
   password: "",
-  postRegisterUserRequestStatus: "idle",
   validationErrors: [],
+  postLoginUserRequestStatus: "idle",
 };
 
-const authenticationRegisterSlice = createSlice({
-  name: "register",
+const authenticationLoginSlice = createSlice({
+  name: "login",
   initialState,
   reducers: {
     reset: (state, action) => {
@@ -59,22 +59,26 @@ const authenticationRegisterSlice = createSlice({
     setValidationErrors: (state, action) => {
       state.validationErrors = action.payload;
     },
+
+    setPostLoginUserRequestStatus: (state, action) => {
+      state.postLoginUserRequestStatus = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postRegisterUser.pending, (state, action) => {
-        state.postRegisterUserRequestStatus = "pending";
+      .addCase(postLoginUser.pending, (state, action) => {
+        state.postLoginUserRequestStatus = "pending";
       })
-      .addCase(postRegisterUser.rejected, (state, action) => {
-        state.postRegisterUserRequestStatus = "rejected";
+      .addCase(postLoginUser.rejected, (state, action) => {
+        state.postLoginUserRequestStatus = "rejected";
       })
-      .addCase(postRegisterUser.fulfilled, (state, action) => {
-        state.postRegisterUserRequestStatus = "fulfilled";
+      .addCase(postLoginUser.fulfilled, (state, action) => {
+        state.postLoginUserRequestStatus = "fulfilled";
       });
   },
 });
 
 export const { reset, setUsername, setPassword, setValidationErrors } =
-  authenticationRegisterSlice.actions;
+  authenticationLoginSlice.actions;
 
-export default authenticationRegisterSlice.reducer;
+export default authenticationLoginSlice.reducer;

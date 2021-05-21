@@ -77,7 +77,7 @@ export default function () {
             initiateLoadingRequest={initiateLoadingRequest}
             loadingRequestStatus={loadingRequestStatus}
             idleText="Register"
-            redirectLink="/account/dashboard"
+            redirectLink="/authentication/login"
           />
         </div>
       </div>
