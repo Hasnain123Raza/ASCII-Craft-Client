@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 import {
@@ -39,9 +39,7 @@ export default function () {
   const contentError = useSelector(selectContentError);
 
   useEffect(() => {
-    return () => {
-      dispatch(reset());
-    };
+    dispatch(reset());
   }, []);
 
   return (

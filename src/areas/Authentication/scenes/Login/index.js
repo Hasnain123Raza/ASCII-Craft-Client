@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import useQuery from "../../../../services/hooks/useQuery.js";
 
 import {
   reset,
@@ -20,6 +22,13 @@ import PostRequestButton from "../../../../components/PostRequestButton";
 
 export default function () {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const query = useQuery();
+
+  const redirectValue = query.get("redirect");
+  const isRedirect = Boolean(redirectValue);
+  if (isRedirect) query.delete("redirect");
+  const redirectLink = isRedirect ? `${redirectValue}?${query.toString()}` : "";
 
   const username = useSelector(selectUsername);
   const password = useSelector(selectPassword);
@@ -32,7 +41,7 @@ export default function () {
   const loadingRequestStatus = useSelector(selectPostLoginUserRequestStatus);
 
   useEffect(() => {
-    return () => dispatch(reset());
+    dispatch(reset());
   }, []);
 
   return (
@@ -77,7 +86,7 @@ export default function () {
             initiateLoadingRequest={initiateLoadingRequest}
             loadingRequestStatus={loadingRequestStatus}
             idleText="Login"
-            redirectLink="/account/dashboard"
+            redirectLink={isRedirect ? redirectLink : "/account/dashboard"}
           />
         </div>
       </div>

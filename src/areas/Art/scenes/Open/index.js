@@ -31,10 +31,8 @@ export default function () {
   const loadingRequestStatus = getArtRequestStatus;
 
   useEffect(() => {
+    dispatch(reset());
     initiateLoadingRequest();
-    return () => {
-      dispatch(reset());
-    };
   }, []);
 
   return (

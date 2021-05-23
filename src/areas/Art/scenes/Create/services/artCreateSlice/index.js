@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import artSchema from "../artSchema.js";
 import { postCreateArtApi } from "./api.js";
+import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
 
 export const postCreateArt = createAsyncThunk(
   "create/postCreateArt",
@@ -24,6 +25,9 @@ export const postCreateArt = createAsyncThunk(
       if (data.success) {
         return data;
       } else {
+        if (data.error.unauthenticated) {
+          dispatch(resetAuthentication());
+        }
         return rejectWithValue();
       }
     }

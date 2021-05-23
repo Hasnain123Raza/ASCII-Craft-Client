@@ -32,7 +32,7 @@ export default function () {
   const loadingRequestStatus = useSelector(selectPostRegisterUserRequestStatus);
 
   useEffect(() => {
-    return () => dispatch(reset());
+    dispatch(reset());
   }, []);
 
   return (

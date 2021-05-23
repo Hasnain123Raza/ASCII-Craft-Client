@@ -71,9 +71,7 @@ export default function () {
   }, [currentPage]);
 
   useEffect(() => {
-    return () => {
-      dispatch(reset());
-    };
+    dispatch(reset());
   }, []);
 
   return (

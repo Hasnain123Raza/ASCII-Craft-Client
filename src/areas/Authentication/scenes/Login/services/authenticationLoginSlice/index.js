@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postLoginUserApi } from "./api.js";
 import userSchema from "../../../../services/userSchema.js";
 
+import { getAuthenticated } from "../../../../../../services/authenticatedSlice";
+
 export const postLoginUser = createAsyncThunk(
   "login/postLoginUser",
   async (user, { dispatch, rejectWithValue }) => {
@@ -22,6 +24,7 @@ export const postLoginUser = createAsyncThunk(
       const data = await postLoginUserApi(user);
 
       if (data.success) {
+        await dispatch(getAuthenticated());
         return data;
       } else {
         if (data.error) {
