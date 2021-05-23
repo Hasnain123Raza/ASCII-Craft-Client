@@ -67,12 +67,12 @@ export default function () {
   const loadingRequestStatus = useSelector(selectLoadingRequestStatus);
 
   useEffect(() => {
-    initiateLoadingRequest();
-  }, [currentPage]);
-
-  useEffect(() => {
     dispatch(reset());
   }, []);
+
+  useEffect(() => {
+    initiateLoadingRequest();
+  }, [currentPage]);
 
   return (
     <div className="art-browse d-flex flex-column" style={{ flex: 1 }}>
