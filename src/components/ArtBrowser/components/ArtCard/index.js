@@ -1,22 +1,11 @@
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import useQuery from "../../../../../../services/hooks/useQuery.js";
+import useQuery from "../../../../services/hooks/useQuery";
 
 import { Card, Button } from "react-bootstrap";
 
-import {
-  selectSimplifiedArtIdByIndex,
-  selectSimplifiedArtTitleByIndex,
-  selectSimplifiedArtDescriptionByIndex,
-} from "../../services/artBrowseSlice/selectors";
-
-export default function ({ index }) {
+export default function ({ _id, title, description }) {
   const history = useHistory();
   const query = useQuery();
-
-  const id = useSelector(selectSimplifiedArtIdByIndex(index));
-  const title = useSelector(selectSimplifiedArtTitleByIndex(index));
-  const description = useSelector(selectSimplifiedArtDescriptionByIndex(index));
 
   return (
     <Card className="h-100">
@@ -30,7 +19,7 @@ export default function ({ index }) {
           className="w-100"
           variant="success"
           onClick={() => {
-            query.set("artId", id);
+            query.set("artId", _id);
             history.push("/art/open?" + query.toString());
           }}
         >

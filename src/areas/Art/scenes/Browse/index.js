@@ -3,14 +3,12 @@ import { useHistory, useLocation } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
 import { useEffect } from "react";
 
-import { Container, Row, Col } from "react-bootstrap";
-import ArtCard from "./components/ArtCard";
+import { Container } from "react-bootstrap";
 import GetRequestCard from "../../../../components/GetRequestCard";
 import Paginator from "../../../../components/Paginator";
+import ArtBrowser from "../../../../components/ArtBrowser";
 
 import {
-  getArtCount,
-  getSimplifiedArts,
   loadResources,
   reset,
   setCurrentPage,
@@ -22,7 +20,7 @@ import {
   selectLoadingRequestStatus,
 } from "./services/artBrowseSlice/selectors.js";
 
-import { getTotalPages, getRowsFromSimplifiedArts } from "./services/grid.js";
+import getTotalPages from "./services/getTotalPages.js";
 
 const cardsPerRow = 3;
 const totalRows = 4;
@@ -38,11 +36,6 @@ export default function () {
   const simplifiedArts = useSelector(selectSimplifiedArts);
 
   const totalPages = getTotalPages(cardsPerRow, totalRows, artCount);
-  const rows = getRowsFromSimplifiedArts(
-    cardsPerRow,
-    totalRows,
-    simplifiedArts
-  );
 
   const parsedQueriedPage = parseInt(query.get("page"));
   const queriedPage =
@@ -83,15 +76,11 @@ export default function () {
           <Container className="mb-2" fluid>
             <h2 style={{ textAlign: "center" }}>Art Browser</h2>
             <hr />
-            {rows.map((row, rowIndex) => (
-              <Row key={rowIndex}>
-                {row.map((art, artIndex) => (
-                  <Col className="my-2" md={12 / cardsPerRow} key={artIndex}>
-                    <ArtCard index={rowIndex * cardsPerRow + artIndex} />
-                  </Col>
-                ))}
-              </Row>
-            ))}
+            <ArtBrowser
+              cardsPerRow={cardsPerRow}
+              totalRows={totalRows}
+              simplifiedArts={simplifiedArts}
+            />
           </Container>
         )}
       />
