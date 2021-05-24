@@ -27,6 +27,7 @@ export const postCreateArt = createAsyncThunk(
       } else {
         if (data.error.unauthenticated) {
           dispatch(resetAuthentication());
+          return rejectWithValue("preventStateUpdates");
         }
         return rejectWithValue();
       }
@@ -78,7 +79,8 @@ export const artCreateSlice = createSlice({
         state.postCreateArtRequestStatus = "pending";
       })
       .addCase(postCreateArt.rejected, (state, action) => {
-        state.postCreateArtRequestStatus = "rejected";
+        if (action.payload !== "preventStateUpdates")
+          state.postCreateArtRequestStatus = "rejected";
       })
       .addCase(postCreateArt.fulfilled, (state, action) => {
         state.postCreateArtRequestStatus = "fulfilled";

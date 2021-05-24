@@ -17,7 +17,7 @@ export default function () {
   const loadingRequestStatus = useSelector(selectGetLogoutRequestStatus);
 
   useEffect(() => {
-    dispatch(reset());
+    return () => dispatch(reset());
   }, []);
 
   return (

@@ -41,7 +41,7 @@ export default function () {
   const loadingRequestStatus = useSelector(selectPostLoginUserRequestStatus);
 
   useEffect(() => {
-    dispatch(reset());
+    return () => dispatch(reset());
   }, []);
 
   return (

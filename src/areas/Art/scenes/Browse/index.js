@@ -67,7 +67,7 @@ export default function () {
   const loadingRequestStatus = useSelector(selectLoadingRequestStatus);
 
   useEffect(() => {
-    dispatch(reset());
+    return () => dispatch(reset());
   }, []);
 
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function () {
   const contentError = useSelector(selectContentError);
 
   useEffect(() => {
-    dispatch(reset());
+    return () => dispatch(reset());
   }, []);
 
   return (
