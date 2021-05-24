@@ -8,7 +8,6 @@ export default function ({
   cardsPerRow,
   totalRows,
   simplifiedArts,
-  children,
 }) {
   const rows = getRowsFromSimplifiedArts(
     cardsPerRow,
@@ -31,7 +30,6 @@ export default function ({
           ))}
         </Row>
       ))}
-      {children}
     </div>
   );
 }

@@ -3,9 +3,11 @@ import useQuery from "../../../../services/hooks/useQuery";
 
 import { Card, Button } from "react-bootstrap";
 
-export default function ({ _id, title, description }) {
+export default function (props) {
   const history = useHistory();
   const query = useQuery();
+
+  const { _id, title, description } = props.simplifiedArt;
 
   return (
     <Card className="h-100">
