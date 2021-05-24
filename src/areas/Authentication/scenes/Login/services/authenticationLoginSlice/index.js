@@ -27,6 +27,10 @@ export const postLoginUser = createAsyncThunk(
         await dispatch(getAuthenticated());
         return data;
       } else {
+        if (data.error.authenticated) {
+          await dispatch(getAuthenticated());
+          return rejectWithValue("preventStateUpdates");
+        }
         if (data.error) {
           dispatch(setValidationErrors([data.error]));
         }
@@ -73,7 +77,8 @@ const authenticationLoginSlice = createSlice({
         state.postLoginUserRequestStatus = "pending";
       })
       .addCase(postLoginUser.rejected, (state, action) => {
-        state.postLoginUserRequestStatus = "rejected";
+        if (action.payload !== "preventStateUpdates")
+          state.postLoginUserRequestStatus = "rejected";
       })
       .addCase(postLoginUser.fulfilled, (state, action) => {
         state.postLoginUserRequestStatus = "fulfilled";
