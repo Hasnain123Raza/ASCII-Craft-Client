@@ -7,7 +7,8 @@ export default function (props) {
   const history = useHistory();
   const query = useQuery();
 
-  const { _id, title, description } = props.simplifiedArt;
+  const { simplifiedArt, openCallback } = props;
+  const { title, description } = simplifiedArt;
 
   return (
     <Card className="h-100">
@@ -20,10 +21,7 @@ export default function (props) {
         <Button
           className="w-100"
           variant="success"
-          onClick={() => {
-            query.set("artId", _id);
-            history.push("/art/open?" + query.toString());
-          }}
+          onClick={() => openCallback(simplifiedArt)}
         >
           Open
         </Button>

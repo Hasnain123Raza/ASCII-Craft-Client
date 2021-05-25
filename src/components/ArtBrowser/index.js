@@ -8,6 +8,7 @@ export default function ({
   cardsPerRow,
   totalRows,
   simplifiedArts,
+  openCallback,
 }) {
   const rows = getRowsFromSimplifiedArts(
     cardsPerRow,
@@ -25,7 +26,10 @@ export default function ({
               md={12 / cardsPerRow}
               key={simplifiedArtIndex}
             >
-              <ArtCard simplifiedArt={simplifiedArt} />
+              <ArtCard
+                simplifiedArt={simplifiedArt}
+                openCallback={openCallback}
+              />
             </Col>
           ))}
         </Row>

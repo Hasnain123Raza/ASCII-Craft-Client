@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { Container } from "react-bootstrap";
 import GetRequestCard from "../../../../components/GetRequestCard";
@@ -48,7 +48,7 @@ export default function () {
 
   if (pageConflict) dispatch(setCurrentPage(queriedPage));
 
-  const initiateLoadingRequest = () => {
+  const initiateLoadingRequest = () =>
     dispatch(
       loadResources({
         pageOffset: currentPage - 1,
@@ -56,7 +56,7 @@ export default function () {
         queriedPage,
       })
     );
-  };
+
   const loadingRequestStatus = useSelector(selectLoadingRequestStatus);
 
   useEffect(() => {
@@ -64,7 +64,8 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    initiateLoadingRequest();
+    const loadingRequestPromise = initiateLoadingRequest();
+    return () => loadingRequestPromise.abort();
   }, [currentPage]);
 
   return (
@@ -80,6 +81,10 @@ export default function () {
               cardsPerRow={cardsPerRow}
               totalRows={totalRows}
               simplifiedArts={simplifiedArts}
+              openCallback={(simplifiedArt) => {
+                query.set("artId", simplifiedArt._id);
+                history.push("/art/open?" + query.toString());
+              }}
             />
           </Container>
         )}
