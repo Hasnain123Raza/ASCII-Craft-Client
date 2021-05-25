@@ -39,7 +39,6 @@ export default function () {
   const responseArtId = useSelector(selectResponseArtId);
 
   if (Boolean(responseArtId)) query.set("artId", responseArtId);
-  console.log(responseArtId);
 
   const titleError = useSelector(selectTitleError);
   const descriptionError = useSelector(selectDescriptionError);
