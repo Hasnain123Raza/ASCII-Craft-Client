@@ -21,9 +21,12 @@ export default function () {
           </LinkContainer>
 
           {isAuthenticated ? (
-            <LinkContainer to="/account/dashboard">
-              <Nav.Link className="ml-auto">Account</Nav.Link>
-            </LinkContainer>
+            <>
+              <Nav.Link>Profile</Nav.Link>
+              <LinkContainer to="/account/dashboard">
+                <Nav.Link className="ml-auto">Account</Nav.Link>
+              </LinkContainer>
+            </>
           ) : (
             <>
               <LinkContainer to="/authentication/login">
