@@ -23,7 +23,7 @@ export const postCreateArt = createAsyncThunk(
       const data = await postCreateArtApi(art);
 
       if (data.success) {
-        return data;
+        return data.payload;
       } else {
         if (data.error.unauthenticated) {
           dispatch(resetAuthentication());
@@ -41,6 +41,7 @@ const initialState = {
     description: "",
     content: "",
   },
+  responseArt: null,
   validationErrors: [],
   postCreateArtRequestStatus: "idle",
 };
@@ -83,6 +84,7 @@ export const artCreateSlice = createSlice({
           state.postCreateArtRequestStatus = "rejected";
       })
       .addCase(postCreateArt.fulfilled, (state, action) => {
+        state.responseArt = action.payload;
         state.postCreateArtRequestStatus = "fulfilled";
       });
   },

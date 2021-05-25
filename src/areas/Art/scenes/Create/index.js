@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import useQuery from "../../../../services/hooks/useQuery.js";
 
 import { Form, Button } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
@@ -17,6 +18,7 @@ import {
   selectTitle,
   selectDescription,
   selectContent,
+  selectResponseArtId,
   selectPostCreateArtRequestStatus,
   selectTitleError,
   selectDescriptionError,
@@ -25,6 +27,7 @@ import {
 
 export default function () {
   const dispatch = useDispatch();
+  const query = useQuery();
 
   const art = useSelector(selectArt);
   const title = useSelector(selectTitle);
@@ -33,6 +36,10 @@ export default function () {
   const postCreateArtRequestStatus = useSelector(
     selectPostCreateArtRequestStatus
   );
+  const responseArtId = useSelector(selectResponseArtId);
+
+  if (Boolean(responseArtId)) query.set("artId", responseArtId);
+  console.log(responseArtId);
 
   const titleError = useSelector(selectTitleError);
   const descriptionError = useSelector(selectDescriptionError);
@@ -107,7 +114,7 @@ export default function () {
           initiateLoadingRequest={() => dispatch(postCreateArt(art))}
           loadingRequestStatus={postCreateArtRequestStatus}
           idleText="Create"
-          redirectLink="/art/open"
+          redirectLink={`/art/open?${query.toString()}`}
         />
       </div>
     </div>

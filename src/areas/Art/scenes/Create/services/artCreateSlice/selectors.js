@@ -8,6 +8,10 @@ export const selectDescription = (state) => selectArt(state).description;
 
 export const selectContent = (state) => selectArt(state).content;
 
+export const selectResponseArt = (state) => selectCreate(state).responseArt;
+
+export const selectResponseArtId = (state) => selectResponseArt(state)?._id;
+
 export const selectPostCreateArtRequestStatus = (state) =>
   selectCreate(state).postCreateArtRequestStatus;
 
