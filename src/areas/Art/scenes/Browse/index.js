@@ -70,34 +70,36 @@ export default function () {
 
   return (
     <div className="art-browse d-flex flex-column" style={{ flex: 1 }}>
-      <GetRequestCard
-        initiateLoadingRequest={initiateLoadingRequest}
-        loadingRequestStatus={loadingRequestStatus}
-        fulfilledComponent={() => (
-          <Container className="mb-2" fluid>
-            <h2 style={{ textAlign: "center" }}>Art Browser</h2>
-            <hr />
-            <ArtBrowser
-              cardsPerRow={cardsPerRow}
-              totalRows={totalRows}
-              simplifiedArts={simplifiedArts}
-              openCallback={(simplifiedArt) => {
-                query.set("artId", simplifiedArt._id);
-                history.push("/art/open?" + query.toString());
-              }}
-            />
-          </Container>
-        )}
-      />
-      <Paginator
-        className="mt-auto"
-        currentPage={currentPage}
-        totalPages={totalPages}
-        pageChangeCallback={(newPage) => {
-          query.set("page", newPage);
-          history.push(location.pathname + "?" + query.toString());
-        }}
-      />
+      <div>
+        <h2 style={{ textAlign: "center" }}>Art Browser</h2>
+        <hr />
+        <GetRequestCard
+          initiateLoadingRequest={initiateLoadingRequest}
+          loadingRequestStatus={loadingRequestStatus}
+          fulfilledComponent={() => (
+            <Container className="mb-2" fluid>
+              <ArtBrowser
+                cardsPerRow={cardsPerRow}
+                totalRows={totalRows}
+                simplifiedArts={simplifiedArts}
+                openCallback={(simplifiedArt) => {
+                  query.set("artId", simplifiedArt._id);
+                  history.push("/art/open?" + query.toString());
+                }}
+              />
+            </Container>
+          )}
+        />
+        <Paginator
+          className="mt-auto"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          pageChangeCallback={(newPage) => {
+            query.set("page", newPage);
+            history.push(location.pathname + "?" + query.toString());
+          }}
+        />
+      </div>
     </div>
   );
 }
