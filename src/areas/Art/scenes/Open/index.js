@@ -62,31 +62,41 @@ export default function () {
             <hr />
             {description}
             <Card className="my-2">
-              <Card.Body style={{ whiteSpace: "pre-line" }}>
+              <Card.Body
+                style={{ whiteSpace: "pre-line", fontFamily: "monospace" }}
+              >
                 {content}
               </Card.Body>
             </Card>
 
             <div className="my-4 d-flex">
-              {isCreator && (
-                <PostRequestButton
-                  className="mr-2"
-                  idleText="Delete"
-                  idleButtonVariant="danger"
-                  initiateLoadingRequest={initiateDeleteRequest}
-                  loadingRequestStatus={deleteRequestStatus}
-                  redirectLink={`/art/browse?${query.toString()}`}
-                />
-              )}
               <Button
-                variant="primary"
-                onClick={() => {
-                  query.delete("artId");
-                  history.push(`/art/browse?${query.toString()}`);
-                }}
+                variant="secondary"
+                onClick={() => navigator.clipboard.writeText(content)}
               >
-                Back
+                Copy
               </Button>
+              <div className="ml-auto">
+                {isCreator && (
+                  <PostRequestButton
+                    className="mr-2"
+                    idleText="Delete"
+                    idleButtonVariant="danger"
+                    initiateLoadingRequest={initiateDeleteRequest}
+                    loadingRequestStatus={deleteRequestStatus}
+                    redirectLink={`/art/browse?${query.toString()}`}
+                  />
+                )}
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    query.delete("artId");
+                    history.push(`/art/browse?${query.toString()}`);
+                  }}
+                >
+                  Back
+                </Button>
+              </div>
             </div>
           </div>
         )}
