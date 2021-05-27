@@ -10,6 +10,7 @@ export default function ({
   initiateLoadingRequest,
   loadingRequestStatus,
   idleText,
+  idleButtonVariant = "success",
   redirectLink,
 }) {
   return (
@@ -21,6 +22,7 @@ export default function ({
           className={className}
           initiateLoadingRequest={initiateLoadingRequest}
           text={idleText}
+          buttonVariant={idleButtonVariant}
         />
       )}
       pendingComponent={() => <LoadingButton className={className} />}

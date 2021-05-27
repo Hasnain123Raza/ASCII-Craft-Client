@@ -1,10 +1,15 @@
 import { Button } from "react-bootstrap";
 
-export default function ({ className, initiateLoadingRequest, text }) {
+export default function ({
+  className,
+  initiateLoadingRequest,
+  text,
+  buttonVariant,
+}) {
   return (
     <Button
       className={className}
-      variant="success"
+      variant={buttonVariant}
       onClick={initiateLoadingRequest}
     >
       {text}

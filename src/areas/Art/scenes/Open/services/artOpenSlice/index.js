@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getArtApi } from "./api.js";
+import { getArtApi, getDeleteArtApi } from "./api.js";
 
 export const getArt = createAsyncThunk(
   "open/getArt",
@@ -14,9 +14,23 @@ export const getArt = createAsyncThunk(
   }
 );
 
+export const getDeleteArt = createAsyncThunk(
+  "open/getDeleteArt",
+  async (artId, { rejectWithValue }) => {
+    const { success, payload } = await getDeleteArtApi(artId);
+
+    if (!success) {
+      return rejectWithValue();
+    } else {
+      return payload;
+    }
+  }
+);
+
 const initialState = {
   art: {},
   getArtRequestStatus: "idle",
+  getDeleteArtRequestStatus: "idle",
 };
 
 const artOpenSlice = createSlice({
@@ -38,6 +52,15 @@ const artOpenSlice = createSlice({
       .addCase(getArt.fulfilled, (state, action) => {
         state.getArtRequestStatus = "fulfilled";
         state.art = action.payload;
+      })
+      .addCase(getDeleteArt.pending, (state, action) => {
+        state.getDeleteArtRequestStatus = "pending";
+      })
+      .addCase(getDeleteArt.rejected, (state, action) => {
+        state.getDeleteArtRequestStatus = "rejected";
+      })
+      .addCase(getDeleteArt.fulfilled, (state, action) => {
+        state.getDeleteArtRequestStatus = "fulfilled";
       });
   },
 });

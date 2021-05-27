@@ -1,18 +1,26 @@
 import GetRequestCard from "../../../../components/GetRequestCard";
 import { Card, Button } from "react-bootstrap";
+import PostRequestButton from "../../../../components/PostRequestButton";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
 
-import { getArt, reset } from "./services/artOpenSlice";
+import { getArt, getDeleteArt, reset } from "./services/artOpenSlice";
 import {
+  selectCreatorId,
   selectTitle,
   selectDescription,
   selectContent,
   selectGetArtRequestStatus,
+  selectGetDeleteArtRequestStatus,
 } from "./services/artOpenSlice/selectors.js";
+
+import {
+  selectIsAuthenticated,
+  selectUserId,
+} from "../../../../services/authenticatedSlice/selectors.js";
 
 export default function () {
   const dispatch = useDispatch();
@@ -21,14 +29,22 @@ export default function () {
 
   const queriedArtId = query.get("artId");
 
+  const creatorId = useSelector(selectCreatorId);
   const title = useSelector(selectTitle);
   const description = useSelector(selectDescription);
   const content = useSelector(selectContent);
+
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const userId = useSelector(selectUserId);
+  const isCreator = userId === creatorId;
 
   const getArtRequestStatus = useSelector(selectGetArtRequestStatus);
 
   const initiateLoadingRequest = () => dispatch(getArt(queriedArtId));
   const loadingRequestStatus = getArtRequestStatus;
+
+  const initiateDeleteRequest = () => dispatch(getDeleteArt(queriedArtId));
+  const deleteRequestStatus = useSelector(selectGetDeleteArtRequestStatus);
 
   useEffect(() => {
     initiateLoadingRequest();
@@ -52,11 +68,21 @@ export default function () {
             </Card>
 
             <div className="my-4 d-flex">
+              {isCreator && (
+                <PostRequestButton
+                  className="mr-2"
+                  idleText="Delete"
+                  idleButtonVariant="danger"
+                  initiateLoadingRequest={initiateDeleteRequest}
+                  loadingRequestStatus={deleteRequestStatus}
+                  redirectLink={`/art/browse?${query.toString()}`}
+                />
+              )}
               <Button
                 variant="primary"
                 onClick={() => {
                   query.delete("artId");
-                  history.push("/art/browse?" + query.toString());
+                  history.push(`/art/browse?${query.toString()}`);
                 }}
               >
                 Back
