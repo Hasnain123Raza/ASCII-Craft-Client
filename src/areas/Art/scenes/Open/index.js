@@ -4,7 +4,7 @@ import PostRequestButton from "../../../../components/PostRequestButton";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
 
 import { getArt, getDeleteArt, reset } from "./services/artOpenSlice";
@@ -27,7 +27,7 @@ export default function () {
   const history = useHistory();
   const query = useQuery();
 
-  const queriedArtId = query.get("artId");
+  const { artId: queriedArtId } = useParams();
 
   const creatorId = useSelector(selectCreatorId);
   const title = useSelector(selectTitle);
@@ -90,7 +90,6 @@ export default function () {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    query.delete("artId");
                     history.push(`/art/browse?${query.toString()}`);
                   }}
                 >

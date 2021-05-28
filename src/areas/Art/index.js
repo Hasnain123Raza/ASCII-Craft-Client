@@ -13,7 +13,7 @@ export default function () {
     <ProtectedRoute exact path="/art/create" key="/art/create">
       <Create />
     </ProtectedRoute>,
-    <Route exact path="/art/open" key="/art/open">
+    <Route exact path="/art/open/:artId" key="/art/open">
       <Open />
     </Route>,
   ];

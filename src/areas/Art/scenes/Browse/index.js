@@ -83,8 +83,7 @@ export default function () {
                 totalRows={totalRows}
                 simplifiedArts={simplifiedArts}
                 openCallback={(simplifiedArt) => {
-                  query.set("artId", simplifiedArt._id);
-                  history.push("/art/open?" + query.toString());
+                  history.push(`/art/open/${simplifiedArt._id}`);
                 }}
               />
             </Container>
