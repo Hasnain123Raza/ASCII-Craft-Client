@@ -22,7 +22,7 @@ export default function () {
   useEffect(() => {
     initiateLoadingRequest();
     return () => dispatch(reset());
-  }, []);
+  }, [userId]);
 
   return (
     <div className="account-profile d-flex flex-column" style={{ flex: 1 }}>
