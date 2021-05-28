@@ -1,7 +1,7 @@
 import { getRowsFromSimplifiedArts } from "./services/grid.js";
 
 import { Row, Col } from "react-bootstrap";
-import ArtCard from "./components/ArtCard";
+import ArtCard from "../ArtCard";
 
 export default function ({
   className,

@@ -1,11 +1,15 @@
 import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "../../services/authenticatedSlice/selectors.js";
+import {
+  selectIsAuthenticated,
+  selectUserId,
+} from "../../services/authenticatedSlice/selectors.js";
 
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default function () {
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const userId = useSelector(selectUserId);
 
   return (
     <div className="header pbc">
@@ -22,7 +26,10 @@ export default function () {
 
           {isAuthenticated ? (
             <>
-              <Nav.Link>Profile</Nav.Link>
+              <LinkContainer to={`/account/profile/${userId}`}>
+                <Nav.Link>Profile</Nav.Link>
+              </LinkContainer>
+
               <LinkContainer to="/account/dashboard">
                 <Nav.Link className="ml-auto">Account</Nav.Link>
               </LinkContainer>

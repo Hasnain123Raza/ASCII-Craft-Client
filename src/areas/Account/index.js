@@ -9,7 +9,7 @@ export default function () {
     <ProtectedRoute exact path="/account/dashboard" key="/account/dashboard">
       <Dashboard />
     </ProtectedRoute>,
-    <Route exact path="/account/profile" key="/account/profile">
+    <Route exact path="/account/profile/:userId" key="/account/profile">
       <Profile />
     </Route>,
   ];

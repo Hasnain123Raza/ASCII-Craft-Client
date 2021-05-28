@@ -1,12 +1,6 @@
-import { useHistory } from "react-router-dom";
-import useQuery from "../../../../services/hooks/useQuery";
-
 import { Card, Button } from "react-bootstrap";
 
 export default function (props) {
-  const history = useHistory();
-  const query = useQuery();
-
   const { simplifiedArt, openCallback } = props;
   const { title, description } = simplifiedArt;
 
