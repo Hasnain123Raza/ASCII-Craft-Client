@@ -1,9 +1,11 @@
 import { useHistory } from "react-router-dom";
+import useQuery from "../../services/hooks/useQuery.js";
 
 import { Card, Button } from "react-bootstrap";
 
 export default function (props) {
   const history = useHistory();
+  const query = useQuery();
 
   const { simplifiedArt } = props;
   const { _id, title, description } = simplifiedArt;
@@ -19,7 +21,7 @@ export default function (props) {
         <Button
           className="w-100"
           variant="success"
-          onClick={() => history.push(`/art/open/${_id}`)}
+          onClick={() => history.push(`/art/open/${_id}?${query.toString()}`)}
         >
           Open
         </Button>
