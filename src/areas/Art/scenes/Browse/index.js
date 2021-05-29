@@ -82,9 +82,6 @@ export default function () {
                 cardsPerRow={cardsPerRow}
                 totalRows={totalRows}
                 simplifiedArts={simplifiedArts}
-                openCallback={(simplifiedArt) => {
-                  history.push(`/art/open/${simplifiedArt._id}`);
-                }}
               />
             </Container>
           )}

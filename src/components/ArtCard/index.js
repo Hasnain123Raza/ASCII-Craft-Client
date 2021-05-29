@@ -1,8 +1,12 @@
+import { useHistory } from "react-router-dom";
+
 import { Card, Button } from "react-bootstrap";
 
 export default function (props) {
-  const { simplifiedArt, openCallback } = props;
-  const { title, description } = simplifiedArt;
+  const history = useHistory();
+
+  const { simplifiedArt } = props;
+  const { _id, title, description } = simplifiedArt;
 
   return (
     <Card className="h-100">
@@ -15,7 +19,7 @@ export default function (props) {
         <Button
           className="w-100"
           variant="success"
-          onClick={() => openCallback(simplifiedArt)}
+          onClick={() => history.push(`/art/open/${_id}`)}
         >
           Open
         </Button>

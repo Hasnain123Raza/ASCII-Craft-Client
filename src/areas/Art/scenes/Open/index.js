@@ -90,7 +90,7 @@ export default function () {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    history.push(`/art/browse?${query.toString()}`);
+                    history.goBack();
                   }}
                 >
                   Back
