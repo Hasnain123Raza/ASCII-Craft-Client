@@ -71,11 +71,23 @@ export default function () {
 
             <div className="my-4 d-flex">
               <Button
+                className="mr-2"
+                variant="success"
+                onClick={() =>
+                  history.push(
+                    `/account/profile/${creatorId}?${query.toString()}`
+                  )
+                }
+              >
+                Creator Profile
+              </Button>
+              <Button
                 variant="secondary"
                 onClick={() => navigator.clipboard.writeText(content)}
               >
                 Copy
               </Button>
+
               <div className="ml-auto">
                 {isCreator && (
                   <PostRequestButton
@@ -90,10 +102,10 @@ export default function () {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    history.goBack();
+                    history.push(`/art/browse?${query.toString()}`);
                   }}
                 >
-                  Back
+                  Back To Browse
                 </Button>
               </div>
             </div>
