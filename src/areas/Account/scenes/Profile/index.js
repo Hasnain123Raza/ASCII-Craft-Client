@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
+import useQuery from "../../../../services/hooks/useQuery.js";
 
 import { getProfile, reset } from "./services/accountProfileSlice";
 import {
@@ -16,6 +17,8 @@ import ArtCard from "../../../../components/ArtCard";
 
 export default function () {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const query = useQuery();
   const { userId } = useParams();
 
   const username = useSelector(selectUsername);
@@ -76,7 +79,14 @@ export default function () {
               ) : (
                 <div className="d-flex mt-2">
                   Total Arts: {totalArtsCreated}
-                  <Button className="ml-auto" variant="success">
+                  <Button
+                    className="ml-auto"
+                    variant="success"
+                    onClick={() => {
+                      query.set("userId", userId);
+                      history.push(`/art/browse?${query.toString()}`);
+                    }}
+                  >
                     Browse All
                   </Button>
                 </div>

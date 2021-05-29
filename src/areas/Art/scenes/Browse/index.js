@@ -48,12 +48,15 @@ export default function () {
 
   if (pageConflict) dispatch(setCurrentPage(queriedPage));
 
+  const queriedUserId = query.get("userId");
+
   const initiateLoadingRequest = () =>
     dispatch(
       loadResources({
         pageOffset: currentPage - 1,
         pageSize: cardsPerRow * totalRows,
         queriedPage,
+        userId: queriedUserId,
       })
     );
 
@@ -66,7 +69,7 @@ export default function () {
   useEffect(() => {
     const loadingRequestPromise = initiateLoadingRequest();
     return () => loadingRequestPromise.abort();
-  }, [currentPage]);
+  }, [currentPage, queriedUserId]);
 
   return (
     <div className="art-browse d-flex flex-column" style={{ flex: 1 }}>
