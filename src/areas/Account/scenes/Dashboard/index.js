@@ -8,7 +8,7 @@ import { selectUsername } from "../../../../services/authenticatedSlice/selector
 
 import PostRequestButton from "../../../../components/PostRequestButton";
 
-export default function () {
+export default function Dashboard() {
   const dispatch = useDispatch();
 
   const username = useSelector(selectUsername);

@@ -12,7 +12,7 @@ import Account from "../../areas/Account";
 import Art from "../../areas/Art";
 import Authentication from "../../areas/Authentication";
 
-export default function () {
+export default function Main() {
   const dispatch = useDispatch();
 
   const initiateLoadingRequest = () => dispatch(loadResources());

@@ -15,7 +15,7 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import GetRequestCard from "../../../../components/GetRequestCard";
 import ArtCard from "../../../../components/ArtCard";
 
-export default function () {
+export default function Profile() {
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();

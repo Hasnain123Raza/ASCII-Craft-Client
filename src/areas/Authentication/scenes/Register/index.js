@@ -23,7 +23,7 @@ import { Form } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 import ReCAPTCHA from "react-google-recaptcha";
 
-export default function () {
+export default function Register() {
   const dispatch = useDispatch();
 
   const username = useSelector(selectUsername);

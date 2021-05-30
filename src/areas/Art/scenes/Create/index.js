@@ -25,7 +25,7 @@ import {
   selectContentError,
 } from "./services/artCreateSlice/selectors.js";
 
-export default function () {
+export default function Create() {
   const dispatch = useDispatch();
 
   const art = useSelector(selectArt);

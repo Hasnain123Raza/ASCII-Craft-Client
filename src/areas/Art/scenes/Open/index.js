@@ -22,7 +22,7 @@ import {
   selectUserId,
 } from "../../../../services/authenticatedSlice/selectors.js";
 
-export default function () {
+export default function Open() {
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();

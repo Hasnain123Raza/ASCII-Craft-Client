@@ -5,7 +5,7 @@ import Browse from "./scenes/Browse";
 import Create from "./scenes/Create";
 import Open from "./scenes/Open";
 
-export default function () {
+export default function Art() {
   return [
     <Route exact path="/art/browse" key="/art/browse">
       <Browse />

@@ -6,7 +6,7 @@ import { Route, Redirect } from "react-router-dom";
 import Login from "./scenes/Login";
 import Register from "./scenes/Register";
 
-export default function () {
+export default function Authentication() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return isAuthenticated ? (

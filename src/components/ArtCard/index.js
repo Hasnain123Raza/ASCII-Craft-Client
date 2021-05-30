@@ -3,7 +3,7 @@ import useQuery from "../../services/hooks/useQuery.js";
 
 import { Card, Button } from "react-bootstrap";
 
-export default function (props) {
+export default function ArtCard(props) {
   const history = useHistory();
   const query = useQuery();
 

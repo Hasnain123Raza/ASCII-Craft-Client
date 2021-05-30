@@ -25,7 +25,7 @@ import getTotalPages from "./services/getTotalPages.js";
 const cardsPerRow = 3;
 const totalRows = 4;
 
-export default function () {
+export default function Browse() {
   const dispatch = useDispatch();
   const query = useQuery();
   const history = useHistory();

@@ -3,7 +3,7 @@ import { getRowsFromSimplifiedArts } from "./services/grid.js";
 import { Row, Col } from "react-bootstrap";
 import ArtCard from "../ArtCard";
 
-export default function ({
+export default function ArtBrowser({
   className,
   cardsPerRow,
   totalRows,

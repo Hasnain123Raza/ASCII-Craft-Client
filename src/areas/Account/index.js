@@ -4,7 +4,7 @@ import ProtectedRoute from "../../components/ProtectedRoute";
 import Dashboard from "./scenes/Dashboard";
 import Profile from "./scenes/Profile";
 
-export default function () {
+export default function Account() {
   return [
     <ProtectedRoute exact path="/account/dashboard" key="/account/dashboard">
       <Dashboard />

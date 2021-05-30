@@ -5,7 +5,7 @@ import { selectIsAuthenticated } from "../../services/authenticatedSlice/selecto
 
 import { Route, Redirect, useLocation } from "react-router-dom";
 
-export default function ({ children, ...rest }) {
+export default function ProtectedRoute({ children, ...rest }) {
   const location = useLocation();
   const query = useQuery();
   query.set("redirect", location.pathname);

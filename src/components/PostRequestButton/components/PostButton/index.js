@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 
-export default function ({
+export default function PostButton({
   className,
   initiateLoadingRequest,
   text,

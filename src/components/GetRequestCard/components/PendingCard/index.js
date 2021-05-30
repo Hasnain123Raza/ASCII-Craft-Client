@@ -1,6 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 
-export default function () {
+export default function PendingCard() {
   return (
     <Card>
       <Card.Body>

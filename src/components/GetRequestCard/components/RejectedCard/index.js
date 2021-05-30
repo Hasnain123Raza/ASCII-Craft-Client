@@ -1,6 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 
-export default function ({ initiateLoadingRequest }) {
+export default function RejectedCard({ initiateLoadingRequest }) {
   return (
     <Card>
       <Card.Body>

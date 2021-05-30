@@ -2,7 +2,7 @@ import MinimalPagination from "./components/MinimalPagination";
 import CollapsedPagination from "./components/CollapsedPagination";
 import ExpandedPagination from "./components/ExpandedPagination";
 
-export default function ({
+export default function Paginator({
   className,
   currentPage,
   totalPages,

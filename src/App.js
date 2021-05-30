@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function () {
+export default function App() {
   return (
     <div className="app d-flex flex-column" style={{ minHeight: "100vh" }}>
       <Header />

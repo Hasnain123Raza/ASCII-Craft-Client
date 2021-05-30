@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 
-export default function ({ className, initiateLoadingRequest }) {
+export default function RetryButton({ className, initiateLoadingRequest }) {
   return (
     <Button
       className={className}

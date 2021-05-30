@@ -2,7 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import "./style.css";
 
-export default function () {
+export default function Footer() {
   return (
     <div className="footer pbc p-3">
       <Container fluid>

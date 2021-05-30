@@ -7,7 +7,7 @@ import {
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default function () {
+export default function Header() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userId = useSelector(selectUserId);
 

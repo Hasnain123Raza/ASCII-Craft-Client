@@ -5,7 +5,7 @@ import PostButton from "./components/PostButton";
 import LoadingButton from "./components/LoadingButton";
 import RetryButton from "./components/RetryButton";
 
-export default function ({
+export default function PostRequestButton({
   className,
   initiateLoadingRequest,
   loadingRequestStatus,
