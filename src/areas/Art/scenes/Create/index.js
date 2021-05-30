@@ -27,7 +27,6 @@ import {
 
 export default function () {
   const dispatch = useDispatch();
-  const query = useQuery();
 
   const art = useSelector(selectArt);
   const title = useSelector(selectTitle);
@@ -37,8 +36,6 @@ export default function () {
     selectPostCreateArtRequestStatus
   );
   const responseArtId = useSelector(selectResponseArtId);
-
-  if (Boolean(responseArtId)) query.set("artId", responseArtId);
 
   const titleError = useSelector(selectTitleError);
   const descriptionError = useSelector(selectDescriptionError);
@@ -113,7 +110,7 @@ export default function () {
           initiateLoadingRequest={() => dispatch(postCreateArt(art))}
           loadingRequestStatus={postCreateArtRequestStatus}
           idleText="Create"
-          redirectLink={`/art/open?${query.toString()}`}
+          redirectLink={`/art/open/${responseArtId}`}
         />
       </div>
     </div>
