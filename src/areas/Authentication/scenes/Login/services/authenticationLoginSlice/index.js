@@ -6,8 +6,12 @@ import { getAuthenticated } from "../../../../../../services/authenticatedSlice"
 
 export const postLoginUser = createAsyncThunk(
   "login/postLoginUser",
-  async (user, { dispatch, rejectWithValue }) => {
-    const validationResult = userSchema.validate(user, { abortEarly: false });
+  async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
+    const validationResult = userSchema.validate(userAndRecaptchaToken, {
+      abortEarly: false,
+    });
+
+    console.log(validationResult);
 
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
@@ -21,7 +25,7 @@ export const postLoginUser = createAsyncThunk(
       return rejectWithValue();
     } else {
       dispatch(setValidationErrors([]));
-      const data = await postLoginUserApi(user);
+      const data = await postLoginUserApi(userAndRecaptchaToken);
 
       if (data.success) {
         await dispatch(getAuthenticated());
@@ -63,6 +67,10 @@ const authenticationLoginSlice = createSlice({
       state.password = action.payload;
     },
 
+    setRecaptchaToken: (state, action) => {
+      state.recaptchaToken = action.payload;
+    },
+
     setValidationErrors: (state, action) => {
       state.validationErrors = action.payload;
     },
@@ -86,7 +94,12 @@ const authenticationLoginSlice = createSlice({
   },
 });
 
-export const { reset, setUsername, setPassword, setValidationErrors } =
-  authenticationLoginSlice.actions;
+export const {
+  reset,
+  setUsername,
+  setPassword,
+  setRecaptchaToken,
+  setValidationErrors,
+} = authenticationLoginSlice.actions;
 
 export default authenticationLoginSlice.reducer;

@@ -5,30 +5,38 @@ import {
   reset,
   setUsername,
   setPassword,
+  setRecaptchaToken,
   postRegisterUser,
 } from "./services/authenticationRegisterSlice";
 import {
   selectUsername,
   selectPassword,
+  selectRecaptchaToken,
   selectPostRegisterUserRequestStatus,
   selectUsernameError,
   selectPasswordError,
 } from "./services/authenticationRegisterSlice/selectors.js";
 
+import { SITE_KEY } from "../../../../services/constants.js";
+
 import { Form } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function () {
   const dispatch = useDispatch();
 
   const username = useSelector(selectUsername);
   const password = useSelector(selectPassword);
+  const recaptchaToken = useSelector(selectRecaptchaToken);
 
   const usernameError = useSelector(selectUsernameError);
   const passwordError = useSelector(selectPasswordError);
 
   const initiateLoadingRequest = () =>
-    dispatch(postRegisterUser({ username, password }));
+    dispatch(
+      postRegisterUser({ user: { username, password }, recaptchaToken })
+    );
   const loadingRequestStatus = useSelector(selectPostRegisterUserRequestStatus);
 
   useEffect(() => {
@@ -70,9 +78,14 @@ export default function () {
               {passwordError}
             </Form.Control.Feedback>
           </Form.Group>
+
+          <ReCAPTCHA
+            sitekey={SITE_KEY}
+            onChange={(tokenValue) => dispatch(setRecaptchaToken(tokenValue))}
+          />
         </Form>
 
-        <div className="d-flex flex-row-reverse">
+        <div className="mt-3 d-flex">
           <PostRequestButton
             initiateLoadingRequest={initiateLoadingRequest}
             loadingRequestStatus={loadingRequestStatus}

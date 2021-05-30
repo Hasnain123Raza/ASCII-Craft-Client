@@ -4,8 +4,12 @@ import userSchema from "../../../../services/userSchema.js";
 
 export const postRegisterUser = createAsyncThunk(
   "register/postRegisterUser",
-  async (user, { dispatch, rejectWithValue }) => {
-    const validationResult = userSchema.validate(user, { abortEarly: false });
+  async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
+    const validationResult = userSchema.validate(userAndRecaptchaToken, {
+      abortEarly: false,
+    });
+
+    console.log(validationResult);
 
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
@@ -19,7 +23,7 @@ export const postRegisterUser = createAsyncThunk(
       return rejectWithValue();
     } else {
       dispatch(setValidationErrors([]));
-      const data = await postRegisterUserApi(user);
+      const data = await postRegisterUserApi(userAndRecaptchaToken);
 
       if (data.success) {
         return data;
@@ -36,6 +40,7 @@ export const postRegisterUser = createAsyncThunk(
 const initialState = {
   username: "",
   password: "",
+  recaptchaToken: "",
   postRegisterUserRequestStatus: "idle",
   validationErrors: [],
 };
@@ -56,6 +61,10 @@ const authenticationRegisterSlice = createSlice({
       state.password = action.payload;
     },
 
+    setRecaptchaToken: (state, action) => {
+      state.recaptchaToken = action.payload;
+    },
+
     setValidationErrors: (state, action) => {
       state.validationErrors = action.payload;
     },
@@ -74,7 +83,12 @@ const authenticationRegisterSlice = createSlice({
   },
 });
 
-export const { reset, setUsername, setPassword, setValidationErrors } =
-  authenticationRegisterSlice.actions;
+export const {
+  reset,
+  setUsername,
+  setPassword,
+  setRecaptchaToken,
+  setValidationErrors,
+} = authenticationRegisterSlice.actions;
 
 export default authenticationRegisterSlice.reducer;
