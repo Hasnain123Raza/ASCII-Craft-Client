@@ -9,8 +9,6 @@ export const postRegisterUser = createAsyncThunk(
       abortEarly: false,
     });
 
-    console.log(validationResult);
-
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
         ({ message, path }) => ({

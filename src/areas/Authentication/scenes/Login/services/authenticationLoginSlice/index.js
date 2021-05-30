@@ -11,8 +11,6 @@ export const postLoginUser = createAsyncThunk(
       abortEarly: false,
     });
 
-    console.log(validationResult);
-
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
         ({ message, path }) => ({
