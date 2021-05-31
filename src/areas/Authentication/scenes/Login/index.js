@@ -17,6 +17,7 @@ import {
   selectPostLoginUserRequestStatus,
   selectUsernameError,
   selectPasswordError,
+  selectRecaptchaTokenError,
 } from "./services/authenticationLoginSlice/selectors.js";
 
 import { SITE_KEY } from "../../../../services/constants.js";
@@ -41,6 +42,7 @@ export default function Login() {
 
   const usernameError = useSelector(selectUsernameError);
   const passwordError = useSelector(selectPasswordError);
+  const recaptchaTokenError = useSelector(selectRecaptchaTokenError);
 
   const initiateLoadingRequest = () =>
     dispatch(postLoginUser({ user: { username, password }, recaptchaToken }));
@@ -91,6 +93,10 @@ export default function Login() {
           sitekey={SITE_KEY}
           onChange={(tokenValue) => dispatch(setRecaptchaToken(tokenValue))}
         />
+
+        <div className="invalid-feedback" style={{ display: "block" }}>
+          {recaptchaTokenError}
+        </div>
 
         <div className="mt-3 d-flex">
           <PostRequestButton

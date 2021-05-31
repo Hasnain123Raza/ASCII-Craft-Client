@@ -45,6 +45,7 @@ export const postLoginUser = createAsyncThunk(
 const initialState = {
   username: "",
   password: "",
+  recaptchaToken: "",
   validationErrors: [],
   postLoginUserRequestStatus: "idle",
 };

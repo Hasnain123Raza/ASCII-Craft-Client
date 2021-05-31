@@ -21,3 +21,8 @@ export const selectPasswordError = (state) =>
     ({ path }) =>
       path.length == 2 && path[0] === "user" && path[1] === "password"
   )[0]?.message;
+
+export const selectRecaptchaTokenError = (state) =>
+  selectRegister(state).validationErrors.filter(
+    ({ path }) => path.length == 1 && path[0] === "recaptchaToken"
+  )[0]?.message;

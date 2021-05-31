@@ -15,6 +15,7 @@ import {
   selectPostRegisterUserRequestStatus,
   selectUsernameError,
   selectPasswordError,
+  selectRecaptchaTokenError,
 } from "./services/authenticationRegisterSlice/selectors.js";
 
 import { SITE_KEY } from "../../../../services/constants.js";
@@ -32,6 +33,7 @@ export default function Register() {
 
   const usernameError = useSelector(selectUsernameError);
   const passwordError = useSelector(selectPasswordError);
+  const recaptchaTokenError = useSelector(selectRecaptchaTokenError);
 
   const initiateLoadingRequest = () =>
     dispatch(
@@ -78,12 +80,16 @@ export default function Register() {
               {passwordError}
             </Form.Control.Feedback>
           </Form.Group>
-
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={(tokenValue) => dispatch(setRecaptchaToken(tokenValue))}
-          />
         </Form>
+
+        <ReCAPTCHA
+          sitekey={SITE_KEY}
+          onChange={(tokenValue) => dispatch(setRecaptchaToken(tokenValue))}
+        />
+
+        <div className="invalid-feedback" style={{ display: "block" }}>
+          {recaptchaTokenError}
+        </div>
 
         <div className="mt-3 d-flex">
           <PostRequestButton
