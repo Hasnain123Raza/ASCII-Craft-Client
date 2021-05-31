@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import useQuery from "../../../../services/hooks/useQuery.js";
 
-import { Form, Button } from "react-bootstrap";
+import { Alert, Form, Button } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 import {
@@ -23,6 +22,7 @@ import {
   selectTitleError,
   selectDescriptionError,
   selectContentError,
+  selectAlertError,
 } from "./services/artCreateSlice/selectors.js";
 
 export default function Create() {
@@ -40,6 +40,7 @@ export default function Create() {
   const titleError = useSelector(selectTitleError);
   const descriptionError = useSelector(selectDescriptionError);
   const contentError = useSelector(selectContentError);
+  const alertError = useSelector(selectAlertError);
 
   useEffect(() => {
     return () => dispatch(reset());
@@ -53,6 +54,8 @@ export default function Create() {
         </h2>
         <hr />
       </div>
+
+      {Boolean(alertError) && <Alert variant="danger">{alertError}</Alert>}
 
       <Form>
         <Form.Group controlId="title">

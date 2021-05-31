@@ -17,15 +17,20 @@ export const selectPostCreateArtRequestStatus = (state) =>
 
 export const selectTitleError = (state) =>
   selectCreate(state).validationErrors.filter(
-    ({ path }) => path.length == 1 && path[0] === "title"
+    ({ path }) => path.length === 1 && path[0] === "title"
   )[0]?.message;
 
 export const selectDescriptionError = (state) =>
   selectCreate(state).validationErrors.filter(
-    ({ path }) => path.length == 1 && path[0] === "description"
+    ({ path }) => path.length === 1 && path[0] === "description"
   )[0]?.message;
 
 export const selectContentError = (state) =>
   selectCreate(state).validationErrors.filter(
-    ({ path }) => path.length == 1 && path[0] === "content"
+    ({ path }) => path.length === 1 && path[0] === "content"
+  )[0]?.message;
+
+export const selectAlertError = (state) =>
+  selectCreate(state).validationErrors.filter(
+    ({ path }) => path.length === 1 && path[0] === "alert"
   )[0]?.message;

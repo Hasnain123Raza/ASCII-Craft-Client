@@ -25,9 +25,12 @@ export const postCreateArt = createAsyncThunk(
       if (data.success) {
         return data.payload;
       } else {
-        if (data.error.unauthenticated) {
-          dispatch(resetAuthentication());
-          return rejectWithValue("preventStateUpdates");
+        if (data.error) {
+          if (data.error.unauthenticated) {
+            dispatch(resetAuthentication());
+            return rejectWithValue("preventStateUpdates");
+          }
+          dispatch(setValidationErrors([data.error]));
         }
         return rejectWithValue();
       }
