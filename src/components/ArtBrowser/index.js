@@ -17,19 +17,25 @@ export default function ArtBrowser({
 
   return (
     <div className={"art-browser " + className}>
-      {rows.map((row, rowIndex) => (
-        <Row key={rowIndex}>
-          {row.map((simplifiedArt, simplifiedArtIndex) => (
-            <Col
-              className="my-2"
-              md={12 / cardsPerRow}
-              key={simplifiedArtIndex}
-            >
-              <ArtCard simplifiedArt={simplifiedArt} />
-            </Col>
-          ))}
-        </Row>
-      ))}
+      {simplifiedArts.length === 0 ? (
+        <h4 className="text-muted" style={{ textAlign: "center" }}>
+          Uh oh... There are no arts
+        </h4>
+      ) : (
+        rows.map((row, rowIndex) => (
+          <Row key={rowIndex}>
+            {row.map((simplifiedArt, simplifiedArtIndex) => (
+              <Col
+                className="my-2"
+                md={12 / cardsPerRow}
+                key={simplifiedArtIndex}
+              >
+                <ArtCard simplifiedArt={simplifiedArt} />
+              </Col>
+            ))}
+          </Row>
+        ))
+      )}
     </div>
   );
 }
