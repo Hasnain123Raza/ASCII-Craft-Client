@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postLoginUserApi } from "./api.js";
-import userSchema from "../../../../services/userSchema.js";
+import loginFormSchema from "../loginFormSchema.js";
 
 import { getAuthenticated } from "../../../../../../services/authenticatedSlice";
 
 export const postLoginUser = createAsyncThunk(
   "login/postLoginUser",
   async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
-    const validationResult = userSchema.validate(userAndRecaptchaToken, {
+    const validationResult = loginFormSchema.validate(userAndRecaptchaToken, {
       abortEarly: false,
     });
 

@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router-dom";
 
 import Login from "./scenes/Login";
 import Register from "./scenes/Register";
+import Verification from "./scenes/Verification";
 
 export default function Authentication() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -22,6 +23,13 @@ export default function Authentication() {
         key="/authentication/register"
       >
         <Register />
+      </Route>,
+      <Route
+        exact
+        path="/authentication/verification"
+        key="/authentication/verification"
+      >
+        <Verification />
       </Route>,
     ]
   );

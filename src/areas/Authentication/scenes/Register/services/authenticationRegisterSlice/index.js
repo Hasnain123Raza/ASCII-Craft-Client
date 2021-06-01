@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUserApi } from "./api.js";
-import userSchema from "../../../../services/userSchema.js";
+import registerFormSchema from "../registerFormSchema.js";
 
 export const postRegisterUser = createAsyncThunk(
   "register/postRegisterUser",
   async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
-    const validationResult = userSchema.validate(userAndRecaptchaToken, {
-      abortEarly: false,
-    });
+    const validationResult = registerFormSchema.validate(
+      userAndRecaptchaToken,
+      {
+        abortEarly: false,
+      }
+    );
 
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
@@ -37,6 +40,7 @@ export const postRegisterUser = createAsyncThunk(
 
 const initialState = {
   username: "",
+  email: "",
   password: "",
   recaptchaToken: "",
   postRegisterUserRequestStatus: "idle",
@@ -53,6 +57,10 @@ const authenticationRegisterSlice = createSlice({
 
     setUsername: (state, action) => {
       state.username = action.payload;
+    },
+
+    setEmail: (state, action) => {
+      state.email = action.payload;
     },
 
     setPassword: (state, action) => {
@@ -84,6 +92,7 @@ const authenticationRegisterSlice = createSlice({
 export const {
   reset,
   setUsername,
+  setEmail,
   setPassword,
   setRecaptchaToken,
   setValidationErrors,

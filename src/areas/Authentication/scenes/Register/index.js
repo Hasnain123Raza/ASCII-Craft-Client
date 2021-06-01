@@ -4,16 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   reset,
   setUsername,
+  setEmail,
   setPassword,
   setRecaptchaToken,
   postRegisterUser,
 } from "./services/authenticationRegisterSlice";
 import {
   selectUsername,
+  selectEmail,
   selectPassword,
   selectRecaptchaToken,
   selectPostRegisterUserRequestStatus,
   selectUsernameError,
+  selectEmailError,
   selectPasswordError,
   selectRecaptchaTokenError,
 } from "./services/authenticationRegisterSlice/selectors.js";
@@ -28,16 +31,18 @@ export default function Register() {
   const dispatch = useDispatch();
 
   const username = useSelector(selectUsername);
+  const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
   const recaptchaToken = useSelector(selectRecaptchaToken);
 
   const usernameError = useSelector(selectUsernameError);
+  const emailError = useSelector(selectEmailError);
   const passwordError = useSelector(selectPasswordError);
   const recaptchaTokenError = useSelector(selectRecaptchaTokenError);
 
   const initiateLoadingRequest = () =>
     dispatch(
-      postRegisterUser({ user: { username, password }, recaptchaToken })
+      postRegisterUser({ user: { username, email, password }, recaptchaToken })
     );
   const loadingRequestStatus = useSelector(selectPostRegisterUserRequestStatus);
 
@@ -65,6 +70,19 @@ export default function Register() {
             />
             <Form.Control.Feedback type="invalid">
               {usernameError}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              isInvalid={Boolean(emailError)}
+              onChange={(event) => dispatch(setEmail(event.target.value))}
+            />
+            <Form.Control.Feedback type="invalid">
+              {emailError}
             </Form.Control.Feedback>
           </Form.Group>
 

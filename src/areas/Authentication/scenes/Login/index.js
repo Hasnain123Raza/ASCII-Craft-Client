@@ -22,6 +22,7 @@ import {
 
 import { SITE_KEY } from "../../../../services/constants.js";
 
+import { LinkContainer } from "react-router-bootstrap";
 import { Form } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -86,6 +87,11 @@ export default function Login() {
             <Form.Control.Feedback type="invalid">
               {passwordError}
             </Form.Control.Feedback>
+            <LinkContainer to="/">
+              <a className="text-muted text-decoration-none">
+                <Form.Text>Forgot Password?</Form.Text>
+              </a>
+            </LinkContainer>
           </Form.Group>
         </Form>
 
