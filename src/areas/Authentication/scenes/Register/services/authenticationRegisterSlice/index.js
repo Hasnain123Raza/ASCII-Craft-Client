@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRegisterUserApi } from "./api.js";
 import registerFormSchema from "../registerFormSchema.js";
 
+import { getAuthenticated } from "../../../../../../services/authenticatedSlice";
+
 export const postRegisterUser = createAsyncThunk(
   "register/postRegisterUser",
   async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
@@ -27,8 +29,13 @@ export const postRegisterUser = createAsyncThunk(
       const data = await postRegisterUserApi(userAndRecaptchaToken);
 
       if (data.success) {
+        await dispatch(getAuthenticated());
         return data;
       } else {
+        if (data.error.authenticated) {
+          await dispatch(getAuthenticated());
+          return rejectWithValue("preventStateUpdates");
+        }
         if (data.error) {
           dispatch(setValidationErrors([data.error]));
         }
@@ -81,7 +88,8 @@ const authenticationRegisterSlice = createSlice({
         state.postRegisterUserRequestStatus = "pending";
       })
       .addCase(postRegisterUser.rejected, (state, action) => {
-        state.postRegisterUserRequestStatus = "rejected";
+        if (action.payload !== "preventStateUpdates")
+          state.postRegisterUserRequestStatus = "rejected";
       })
       .addCase(postRegisterUser.fulfilled, (state, action) => {
         state.postRegisterUserRequestStatus = "fulfilled";

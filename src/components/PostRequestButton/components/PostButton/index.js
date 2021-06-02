@@ -4,12 +4,12 @@ export default function PostButton({
   className,
   initiateLoadingRequest,
   text,
-  buttonVariant,
+  variant,
 }) {
   return (
     <Button
       className={className}
-      variant={buttonVariant}
+      variant={variant}
       onClick={initiateLoadingRequest}
     >
       {text}

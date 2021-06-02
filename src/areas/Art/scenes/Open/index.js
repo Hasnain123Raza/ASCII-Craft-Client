@@ -93,7 +93,7 @@ export default function Open() {
                   <PostRequestButton
                     className="mr-2"
                     idleText="Delete"
-                    idleButtonVariant="danger"
+                    idleVariant="danger"
                     initiateLoadingRequest={initiateDeleteRequest}
                     loadingRequestStatus={deleteRequestStatus}
                     redirectLink={`/art/browse?${query.toString()}`}

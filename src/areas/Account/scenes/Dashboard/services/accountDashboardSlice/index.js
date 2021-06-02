@@ -1,7 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getLogoutApi } from "./api.js";
+import { getLogoutApi, getEmailVerificationApi } from "./api.js";
 
 import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
+
+export const getEmailVerification = createAsyncThunk(
+  "dashboard/getEmailVerification",
+  async (_, { dispatch, rejectWithValue }) => {
+    const data = await getEmailVerificationApi();
+
+    if (data.success) {
+      dispatch(resetErrors());
+      return true;
+    } else {
+      if (data.error) {
+        dispatch(setErrors([data.error]));
+      }
+      rejectWithValue();
+    }
+  }
+);
 
 export const getLogout = createAsyncThunk(
   "dashboard/getLogout",
@@ -18,7 +35,9 @@ export const getLogout = createAsyncThunk(
 );
 
 const initialState = {
+  getEmailVerificationRequestStatus: "idle",
   getLogoutRequestStatus: "idle",
+  errors: [],
 };
 
 const accountDashboardSlice = createSlice({
@@ -28,9 +47,26 @@ const accountDashboardSlice = createSlice({
     reset: (state, action) => {
       return { ...initialState };
     },
+
+    setErrors: (state, action) => {
+      state.errors = action.payload;
+    },
+
+    resetErrors: (state, action) => {
+      state.errors = [];
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getEmailVerification.pending, (state, action) => {
+        state.getEmailVerificationRequestStatus = "pending";
+      })
+      .addCase(getEmailVerification.rejected, (state, action) => {
+        state.getEmailVerificationRequestStatus = "rejected";
+      })
+      .addCase(getEmailVerification.fulfilled, (state, action) => {
+        state.getEmailVerificationRequestStatus = "fulfilled";
+      })
       .addCase(getLogout.pending, (state, action) => {
         state.getLogoutRequestStatus = "pending";
       })
@@ -43,6 +79,6 @@ const accountDashboardSlice = createSlice({
   },
 });
 
-export const { reset } = accountDashboardSlice.actions;
+export const { reset, setErrors, resetErrors } = accountDashboardSlice.actions;
 
 export default accountDashboardSlice.reducer;

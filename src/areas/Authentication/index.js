@@ -5,32 +5,28 @@ import { Route, Redirect } from "react-router-dom";
 
 import Login from "./scenes/Login";
 import Register from "./scenes/Register";
-import Verification from "./scenes/Verification";
+import EmailVerification from "./scenes/EmailVerification";
 
 export default function Authentication() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  return isAuthenticated ? (
-    <Redirect exact to="/account/dashboard" />
-  ) : (
-    [
-      <Route exact path="/authentication/login" key="/authentication/login">
-        <Login />
-      </Route>,
-      <Route
-        exact
-        path="/authentication/register"
-        key="/authentication/register"
-      >
+  return [
+    <Route exact path="/authentication/login" key="/authentication/login">
+      {isAuthenticated ? <Redirect exact to="/account/dashboard" /> : <Login />}
+    </Route>,
+    <Route exact path="/authentication/register" key="/authentication/register">
+      {isAuthenticated ? (
+        <Redirect exact to="/account/dashboard" />
+      ) : (
         <Register />
-      </Route>,
-      <Route
-        exact
-        path="/authentication/verification"
-        key="/authentication/verification"
-      >
-        <Verification />
-      </Route>,
-    ]
-  );
+      )}
+    </Route>,
+    <Route
+      exact
+      path="/authentication/emailverification/:token"
+      key="/authentication/emailverification/:token"
+    >
+      <EmailVerification />
+    </Route>,
+  ];
 }
