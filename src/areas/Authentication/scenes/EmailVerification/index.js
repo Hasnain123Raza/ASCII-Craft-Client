@@ -12,6 +12,7 @@ import {
 } from "./services/authenticationEmailVerificationSlice/selectors.js";
 
 import { getAuthenticated } from "../../../../services/authenticatedSlice";
+import { selectIsAuthenticated } from "../../../../services/authenticatedSlice/selectors.js";
 
 import GetRequestCard from "../../../../components/GetRequestCard";
 import { Button, Alert } from "react-bootstrap";
@@ -22,6 +23,7 @@ export default function EmailVerification() {
   const history = useHistory();
 
   const alertError = useSelector(selectAlertError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const initiateLoadingRequest = () => dispatch(getEmailVerification(token));
   const loadingRequestStatus = useSelector(
@@ -56,16 +58,28 @@ export default function EmailVerification() {
           />
         )}
 
-        <Button
-          onClick={() => {
-            dispatch(getAuthenticated());
-            history.push("/account/dashboard");
-          }}
-          className="mt-2"
-          variant="success"
-        >
-          Dashboard
-        </Button>
+        {isAuthenticated ? (
+          <Button
+            onClick={() => {
+              dispatch(getAuthenticated());
+              history.push("/account/dashboard");
+            }}
+            className="mt-2"
+            variant="success"
+          >
+            Dashboard
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              history.push("/authentication/login");
+            }}
+            className="mt-2"
+            variant="success"
+          >
+            Login
+          </Button>
+        )}
       </div>
     </div>
   );
