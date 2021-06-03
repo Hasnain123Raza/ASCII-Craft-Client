@@ -43,7 +43,7 @@ export const postLoginUser = createAsyncThunk(
 );
 
 const initialState = {
-  username: "",
+  email: "",
   password: "",
   recaptchaToken: "",
   validationErrors: [],
@@ -58,8 +58,8 @@ const authenticationLoginSlice = createSlice({
       return { ...initialState };
     },
 
-    setUsername: (state, action) => {
-      state.username = action.payload;
+    setEmail: (state, action) => {
+      state.email = action.payload;
     },
 
     setPassword: (state, action) => {
@@ -95,7 +95,7 @@ const authenticationLoginSlice = createSlice({
 
 export const {
   reset,
-  setUsername,
+  setEmail,
   setPassword,
   setRecaptchaToken,
   setValidationErrors,

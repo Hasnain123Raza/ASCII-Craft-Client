@@ -5,17 +5,17 @@ import useQuery from "../../../../services/hooks/useQuery.js";
 
 import {
   reset,
-  setUsername,
+  setEmail,
   setPassword,
   setRecaptchaToken,
   postLoginUser,
 } from "./services/authenticationLoginSlice";
 import {
-  selectUsername,
+  selectEmail,
   selectPassword,
   selectRecaptchaToken,
   selectPostLoginUserRequestStatus,
-  selectUsernameError,
+  selectEmailError,
   selectPasswordError,
   selectRecaptchaTokenError,
 } from "./services/authenticationLoginSlice/selectors.js";
@@ -29,7 +29,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const query = useQuery();
 
   const redirectValue = query.get("redirect");
@@ -37,16 +36,16 @@ export default function Login() {
   if (isRedirect) query.delete("redirect");
   const redirectLink = isRedirect ? `${redirectValue}?${query.toString()}` : "";
 
-  const username = useSelector(selectUsername);
+  const email = useSelector(selectEmail);
   const password = useSelector(selectPassword);
   const recaptchaToken = useSelector(selectRecaptchaToken);
 
-  const usernameError = useSelector(selectUsernameError);
+  const emailError = useSelector(selectEmailError);
   const passwordError = useSelector(selectPasswordError);
   const recaptchaTokenError = useSelector(selectRecaptchaTokenError);
 
   const initiateLoadingRequest = () =>
-    dispatch(postLoginUser({ user: { username, password }, recaptchaToken }));
+    dispatch(postLoginUser({ user: { email, password }, recaptchaToken }));
   const loadingRequestStatus = useSelector(selectPostLoginUserRequestStatus);
 
   useEffect(() => {
@@ -63,16 +62,16 @@ export default function Login() {
         <hr />
 
         <Form>
-          <Form.Group controlId="username">
-            <Form.Label>Username</Form.Label>
+          <Form.Group controlId="email">
+            <Form.Label>Email</Form.Label>
             <Form.Control
-              type="text"
-              value={username}
-              isInvalid={Boolean(usernameError)}
-              onChange={(event) => dispatch(setUsername(event.target.value))}
+              type="email"
+              value={email}
+              isInvalid={Boolean(emailError)}
+              onChange={(event) => dispatch(setEmail(event.target.value))}
             />
             <Form.Control.Feedback type="invalid">
-              {usernameError}
+              {emailError}
             </Form.Control.Feedback>
           </Form.Group>
 

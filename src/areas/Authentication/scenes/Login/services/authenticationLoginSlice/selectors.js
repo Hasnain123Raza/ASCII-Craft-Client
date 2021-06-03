@@ -1,6 +1,6 @@
 export const selectLogin = (state) => state.authentication.login;
 
-export const selectUsername = (state) => selectLogin(state).username;
+export const selectEmail = (state) => selectLogin(state).email;
 
 export const selectPassword = (state) => selectLogin(state).password;
 
@@ -10,10 +10,9 @@ export const selectRecaptchaToken = (state) =>
 export const selectPostLoginUserRequestStatus = (state) =>
   selectLogin(state).postLoginUserRequestStatus;
 
-export const selectUsernameError = (state) =>
+export const selectEmailError = (state) =>
   selectLogin(state).validationErrors.filter(
-    ({ path }) =>
-      path.length == 2 && path[0] === "user" && path[1] === "username"
+    ({ path }) => path.length == 2 && path[0] === "user" && path[1] === "email"
   )[0]?.message;
 
 export const selectPasswordError = (state) =>
