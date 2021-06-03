@@ -19,7 +19,7 @@ import {
 } from "../../../../services/authenticatedSlice/selectors";
 
 import { Badge, Alert } from "react-bootstrap";
-import EmailVerificationButton from "./components/EmailVerificationButton";
+import RepeatedPostRequestButton from "../../../../components/RepeatedPostRequestButton";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 export default function Dashboard() {
@@ -58,10 +58,11 @@ export default function Dashboard() {
         <h6 className="d-inline">Rank: </h6> {rank} <br />
         <div className="mt-2">
           {rank === "unverified" && (
-            <EmailVerificationButton
+            <RepeatedPostRequestButton
               className="mr-2"
               initiateLoadingRequest={initiateGetEmailVerification}
               loadingRequestStatus={getEmailVerificationRequestStatus}
+              idleText="Send Email Verification"
             />
           )}
           <PostRequestButton

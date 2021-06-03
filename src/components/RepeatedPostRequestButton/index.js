@@ -1,4 +1,3 @@
-import { Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Resource from "../Resource";
 
@@ -27,13 +26,13 @@ function LoadingButton({ className }) {
   );
 }
 
-export default function PostRequestButton({
+export default function RepeatedPostRequestButton({
   className,
   initiateLoadingRequest,
   loadingRequestStatus,
   idleText,
   idleVariant = "success",
-  redirectLink,
+  hideRetry = true,
 }) {
   return (
     <Resource
@@ -48,15 +47,31 @@ export default function PostRequestButton({
         />
       )}
       pendingComponent={() => <LoadingButton className={className} />}
-      rejectedComponent={() => (
+      rejectedComponent={() =>
+        hideRetry ? (
+          <InitiateLoadingRequestButton
+            className={className}
+            initiateLoadingRequest={initiateLoadingRequest}
+            text={idleText}
+            variant={idleVariant}
+          />
+        ) : (
+          <InitiateLoadingRequestButton
+            className={className}
+            initiateLoadingRequest={initiateLoadingRequest}
+            text="Retry"
+            variant="danger"
+          />
+        )
+      }
+      fulfilledComponent={() => (
         <InitiateLoadingRequestButton
           className={className}
           initiateLoadingRequest={initiateLoadingRequest}
-          text="Retry"
-          variant="danger"
+          text={idleText}
+          variant={idleVariant}
         />
       )}
-      fulfilledComponent={() => <Redirect exact to={redirectLink} />}
     />
   );
 }

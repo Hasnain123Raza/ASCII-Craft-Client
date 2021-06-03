@@ -9,7 +9,7 @@ export const getEmailVerification = createAsyncThunk(
     const data = await getEmailVerificationApi();
 
     if (data.success) {
-      dispatch(resetErrors());
+      dispatch(setErrors([]));
       return true;
     } else {
       if (data.error) {
@@ -51,10 +51,6 @@ const accountDashboardSlice = createSlice({
     setErrors: (state, action) => {
       state.errors = action.payload;
     },
-
-    resetErrors: (state, action) => {
-      state.errors = [];
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -79,6 +75,6 @@ const accountDashboardSlice = createSlice({
   },
 });
 
-export const { reset, setErrors, resetErrors } = accountDashboardSlice.actions;
+export const { reset, setErrors } = accountDashboardSlice.actions;
 
 export default accountDashboardSlice.reducer;
