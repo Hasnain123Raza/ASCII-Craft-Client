@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import artSchema from "../artSchema.js";
+import createFormSchema from "../createFormSchema.js";
 import { postCreateArtApi } from "./api.js";
 import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
 
 export const postCreateArt = createAsyncThunk(
   "create/postCreateArt",
   async (art, { dispatch, rejectWithValue }) => {
-    const validationResult = artSchema.validate(art, { abortEarly: false });
+    const validationResult = createFormSchema.validate(art, {
+      abortEarly: false,
+    });
 
     if (validationResult.error) {
       const validationErrors = validationResult.error.details.map(
