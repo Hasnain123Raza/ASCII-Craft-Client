@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
 
 import {
@@ -86,7 +85,7 @@ export default function Login() {
             <Form.Control.Feedback type="invalid">
               {passwordError}
             </Form.Control.Feedback>
-            <LinkContainer to="/">
+            <LinkContainer to="/authentication/recoverpassword">
               <a className="text-muted text-decoration-none">
                 <Form.Text>Forgot Password?</Form.Text>
               </a>

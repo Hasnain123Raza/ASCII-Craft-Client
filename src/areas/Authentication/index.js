@@ -6,6 +6,8 @@ import { Route, Redirect } from "react-router-dom";
 import Login from "./scenes/Login";
 import Register from "./scenes/Register";
 import EmailVerification from "./scenes/EmailVerification";
+import RecoverPassword from "./scenes/RecoverPassword";
+import NewPassword from "./scenes/NewPassword";
 
 export default function Authentication() {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -27,6 +29,20 @@ export default function Authentication() {
       key="/authentication/emailverification/:token"
     >
       <EmailVerification />
+    </Route>,
+    <Route
+      exact
+      path="/authentication/recoverpassword"
+      key="/authentication/recoverpassword"
+    >
+      <RecoverPassword />
+    </Route>,
+    <Route
+      exact
+      path="/authentication/newpassword/:_id/:token"
+      key="/authentication/newpassword/:_id/:token"
+    >
+      <NewPassword />
     </Route>,
   ];
 }
