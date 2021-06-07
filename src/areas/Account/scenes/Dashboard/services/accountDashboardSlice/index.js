@@ -18,7 +18,7 @@ export const getEmailVerification = createAsyncThunk(
           dispatch(
             setAlert({ variant: "danger", message: data.errors[0].message })
           );
-        else dispatch(setErrors([data.error]));
+        else dispatch(setErrors(data.errors));
       }
 
       rejectWithValue();
