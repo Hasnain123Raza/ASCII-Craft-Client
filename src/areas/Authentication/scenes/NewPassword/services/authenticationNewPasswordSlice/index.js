@@ -1,39 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postNewPasswordApi } from "./api.js";
 import newPasswordFormSchema from "../newPasswordFormSchema.js";
+import processPostFormRequest from "../../../../../../services/functions/processPostFormRequest.js";
 
 export const postNewPassword = createAsyncThunk(
   "newPassword/postNewPassword",
   async (newPasswordAndToken, { dispatch, rejectWithValue }) => {
-    const validationResult = newPasswordFormSchema.validate(
+    const formResponse = await processPostFormRequest(
       newPasswordAndToken,
-      {
-        abortEarly: false,
-      }
+      newPasswordFormSchema,
+      postNewPasswordApi,
+      dispatch,
+      setValidationErrors
     );
 
-    if (validationResult.error) {
-      const validationErrors = validationResult.error.details.map(
-        ({ message, path }) => ({
-          message,
-          path,
-        })
-      );
+    const { success } = formResponse;
 
-      dispatch(setValidationErrors(validationErrors));
-      return rejectWithValue();
+    if (success) {
+      return formResponse.payload;
     } else {
-      dispatch(setValidationErrors([]));
-      const data = await postNewPasswordApi(newPasswordAndToken);
-
-      if (data.success) {
-        return data;
-      } else {
-        if (data.error) {
-          dispatch(setValidationErrors([data.error]));
-        }
-        return rejectWithValue();
-      }
+      return rejectWithValue();
     }
   }
 );

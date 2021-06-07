@@ -6,6 +6,7 @@ import selectLoadingRequestStatus from "../../services/loader/selectLoadingReque
 import { Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import GetRequestCard from "../GetRequestCard";
+import AlertSystem from "../AlertSystem";
 
 import Account from "../../areas/Account";
 import Art from "../../areas/Art";
@@ -24,11 +25,14 @@ export default function () {
           initiateLoadingRequest={initiateLoadingRequest}
           loadingRequestStatus={loadingRequestStatus}
           fulfilledComponent={() => (
-            <Switch>
-              {Account()}
-              {Art()}
-              {Authentication()}
-            </Switch>
+            <>
+              <AlertSystem />
+              <Switch>
+                {Account()}
+                {Art()}
+                {Authentication()}
+              </Switch>
+            </>
           )}
         />
       </Container>

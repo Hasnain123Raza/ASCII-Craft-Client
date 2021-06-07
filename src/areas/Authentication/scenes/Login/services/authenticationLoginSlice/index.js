@@ -1,43 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postLoginUserApi } from "./api.js";
 import loginFormSchema from "../loginFormSchema.js";
+import processPostFormRequest from "../../../../../../services/functions/processPostFormRequest.js";
 
 import { getAuthenticated } from "../../../../../../services/authenticatedSlice";
 
 export const postLoginUser = createAsyncThunk(
   "login/postLoginUser",
   async (userAndRecaptchaToken, { dispatch, rejectWithValue }) => {
-    const validationResult = loginFormSchema.validate(userAndRecaptchaToken, {
-      abortEarly: false,
-    });
+    const formResponse = await processPostFormRequest(
+      userAndRecaptchaToken,
+      loginFormSchema,
+      postLoginUserApi,
+      dispatch,
+      setValidationErrors
+    );
 
-    if (validationResult.error) {
-      const validationErrors = validationResult.error.details.map(
-        ({ message, path }) => ({
-          message,
-          path,
-        })
-      );
+    const { success } = formResponse;
 
-      dispatch(setValidationErrors(validationErrors));
-      return rejectWithValue();
+    if (success) {
+      await dispatch(getAuthenticated());
+      return formResponse.payload;
     } else {
-      dispatch(setValidationErrors([]));
-      const data = await postLoginUserApi(userAndRecaptchaToken);
-
-      if (data.success) {
+      if (formResponse.errors[0].path[0] === "authentication") {
         await dispatch(getAuthenticated());
-        return data;
-      } else {
-        if (data.error.authenticated) {
-          await dispatch(getAuthenticated());
-          return rejectWithValue("preventStateUpdates");
-        }
-        if (data.error) {
-          dispatch(setValidationErrors([data.error]));
-        }
-        return rejectWithValue();
+        return rejectWithValue("preventStateUpdates");
       }
+
+      return rejectWithValue();
     }
   }
 );

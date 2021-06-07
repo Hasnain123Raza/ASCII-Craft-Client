@@ -1,39 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postRecoverPasswordApi } from "./api.js";
 import recoverPasswordFormSchema from "../recoverPasswordFormSchema.js";
+import processPostFormRequest from "../../../../../../services/functions/processPostFormRequest.js";
 
 export const postRecoverPassword = createAsyncThunk(
   "recoverPassword/postRecoverPassword",
   async (recoverPasswordEmail, { dispatch, rejectWithValue }) => {
-    const validationResult = recoverPasswordFormSchema.validate(
+    const formResponse = await processPostFormRequest(
       recoverPasswordEmail,
-      {
-        abortEarly: false,
-      }
+      recoverPasswordFormSchema,
+      postRecoverPasswordApi,
+      dispatch,
+      setValidationErrors
     );
 
-    if (validationResult.error) {
-      const validationErrors = validationResult.error.details.map(
-        ({ message, path }) => ({
-          message,
-          path,
-        })
-      );
+    const { success } = formResponse;
 
-      dispatch(setValidationErrors(validationErrors));
-      return rejectWithValue();
+    if (success) {
+      return formResponse.payload;
     } else {
-      const data = await postRecoverPasswordApi(recoverPasswordEmail);
-
-      if (data.success) {
-        dispatch(setValidationErrors([]));
-        return data;
-      } else {
-        if (data.error) {
-          dispatch(setValidationErrors([data.error]));
-        }
-        return rejectWithValue();
-      }
+      return rejectWithValue();
     }
   }
 );

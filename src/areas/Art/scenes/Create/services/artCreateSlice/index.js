@@ -2,40 +2,30 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import createFormSchema from "../createFormSchema.js";
 import { postCreateArtApi } from "./api.js";
 import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
+import processPostFormRequest from "../../../../../../services/functions/processPostFormRequest.js";
 
 export const postCreateArt = createAsyncThunk(
   "create/postCreateArt",
   async (art, { dispatch, rejectWithValue }) => {
-    const validationResult = createFormSchema.validate(art, {
-      abortEarly: false,
-    });
+    const formResponse = await processPostFormRequest(
+      art,
+      createFormSchema,
+      postCreateArtApi,
+      dispatch,
+      setValidationErrors
+    );
 
-    if (validationResult.error) {
-      const validationErrors = validationResult.error.details.map(
-        ({ message, path }) => ({
-          message,
-          path,
-        })
-      );
+    const { success } = formResponse;
 
-      dispatch(setValidationErrors(validationErrors));
-      return rejectWithValue();
+    if (success) {
+      return formResponse.payload;
     } else {
-      dispatch(setValidationErrors([]));
-      const data = await postCreateArtApi(art);
-
-      if (data.success) {
-        return data.payload;
-      } else {
-        if (data.error) {
-          if (data.error.unauthenticated) {
-            dispatch(resetAuthentication());
-            return rejectWithValue("preventStateUpdates");
-          }
-          dispatch(setValidationErrors([data.error]));
-        }
-        return rejectWithValue();
+      if (formResponse.errors[0].path[0] === "unauthenticated") {
+        dispatch(resetAuthentication());
+        return rejectWithValue("preventStateUpdates");
       }
+
+      return rejectWithValue();
     }
   }
 );

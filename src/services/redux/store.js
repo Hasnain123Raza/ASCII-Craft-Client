@@ -4,7 +4,8 @@ import artReducer from "../../areas/Art/services/artReducer.js";
 import authenticationReducer from "../../areas/Authentication/services/authenticationReducer.js";
 import accountReducer from "../../areas/Account/services/accountReducer.js";
 
-import authenticatedSlice from "../authenticatedSlice";
+import authenticatedReducer from "../authenticatedSlice";
+import alertSystemReducer from "../../components/AlertSystem/services/alertSystemSlice";
 
 export default configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export default configureStore({
     authentication: authenticationReducer,
     account: accountReducer,
 
-    authenticated: authenticatedSlice,
+    authenticated: authenticatedReducer,
+    alertSystem: alertSystemReducer,
   },
 });
