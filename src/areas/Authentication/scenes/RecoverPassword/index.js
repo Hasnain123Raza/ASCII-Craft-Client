@@ -9,11 +9,10 @@ import {
 import {
   selectEmail,
   selectEmailError,
-  selectAlertError,
   selectPostRecoverPasswordRequestStatus,
 } from "./services/authenticationRecoverPasswordSlice/selectors.js";
 
-import { Form, Alert } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import RepeatedPostRequestButton from "../../../../components/RepeatedPostRequestButton";
 
 export default function RecoverPassword() {
@@ -22,7 +21,6 @@ export default function RecoverPassword() {
   const email = useSelector(selectEmail);
 
   const emailError = useSelector(selectEmailError);
-  const alertError = useSelector(selectAlertError);
 
   const initiateLoadingRequest = () => dispatch(postRecoverPassword({ email }));
   const loadingRequestStatus = useSelector(
@@ -41,7 +39,6 @@ export default function RecoverPassword() {
       <div>
         <h2 style={{ textAlign: "center" }}>Recover Password</h2>
         <hr />
-        {Boolean(alertError) && <Alert variant="danger">{alertError}</Alert>}
       </div>
 
       <Form>

@@ -9,7 +9,6 @@ import {
 import {
   selectGetEmailVerificationRequestStatus,
   selectGetLogoutRequestStatus,
-  selectAlertError,
 } from "./services/accountDashboardSlice/selectors.js";
 
 import {
@@ -18,7 +17,7 @@ import {
   selectRank,
 } from "../../../../services/authenticatedSlice/selectors";
 
-import { Badge, Alert } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 import RepeatedPostRequestButton from "../../../../components/RepeatedPostRequestButton";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
@@ -28,7 +27,6 @@ export default function Dashboard() {
   const username = useSelector(selectUsername);
   const email = useSelector(selectEmail);
   const rank = useSelector(selectRank);
-  const alertError = useSelector(selectAlertError);
 
   const initiateGetEmailVerification = () => {
     dispatch(getEmailVerification());
@@ -49,7 +47,6 @@ export default function Dashboard() {
       <div>
         <h2 style={{ textAlign: "center" }}>Welcome {username}!</h2>
         <hr />
-        {Boolean(alertError) && <Alert variant="danger">{alertError}</Alert>}
         <h6 className="d-inline">Username: </h6> {username} <br />
         <h6 className="d-inline">Email: </h6>
         {email}{" "}

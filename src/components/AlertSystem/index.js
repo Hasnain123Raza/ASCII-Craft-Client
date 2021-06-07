@@ -18,6 +18,16 @@ export default function AlertSystem() {
   }, [location]);
 
   return (
-    <>{Boolean(alert) && <Alert variant={alert.variant}>{alert.text}</Alert>}</>
+    <>
+      {Boolean(alert) && (
+        <Alert
+          variant={alert.variant}
+          onClose={() => dispatch(reset())}
+          dismissible
+        >
+          {alert.message}
+        </Alert>
+      )}
+    </>
   );
 }

@@ -29,8 +29,3 @@ export const selectContentError = (state) =>
   selectCreate(state).validationErrors.filter(
     ({ path }) => path.length === 1 && path[0] === "content"
   )[0]?.message;
-
-export const selectAlertError = (state) =>
-  selectCreate(state).validationErrors.filter(
-    ({ path }) => path.length === 1 && path[0] === "alert"
-  )[0]?.message;

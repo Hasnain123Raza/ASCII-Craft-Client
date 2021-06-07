@@ -11,10 +11,9 @@ import {
   selectPassword,
   selectPostNewPasswordRequestStatus,
   selectPasswordError,
-  selectAlertError,
 } from "./services/authenticationNewPasswordSlice/selectors.js";
 
-import { Alert, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 export default function NewPassword() {
@@ -24,7 +23,6 @@ export default function NewPassword() {
   const password = useSelector(selectPassword);
 
   const passwordError = useSelector(selectPasswordError);
-  const alertError = useSelector(selectAlertError);
 
   const initiateLoadingRequest = () =>
     dispatch(postNewPassword({ _id, token, password }));
@@ -42,7 +40,6 @@ export default function NewPassword() {
       <div>
         <h2 style={{ textAlign: "center" }}>New Password</h2>
         <hr />
-        {Boolean(alertError) && <Alert variant="danger">{alertError}</Alert>}
       </div>
 
       <Form>

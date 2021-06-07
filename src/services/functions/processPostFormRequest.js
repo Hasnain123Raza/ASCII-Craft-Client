@@ -1,6 +1,8 @@
 import validateWithJoi from "./validateWithJoi.js";
 import postToApi from "./postToApi.js";
 
+import { setAlert } from "../../components/AlertSystem/services/alertSystemSlice";
+
 export default async function processPostFormRequest(
   formData,
   formSchema,
@@ -23,7 +25,15 @@ export default async function processPostFormRequest(
 
   if (!postSuccess) {
     const { errors: postErrors } = postResponse;
-    if (postResponse) dispatch(setValidationErrors(postErrors));
+
+    if (postErrors) {
+      if (postErrors[0].path[0] === "alert")
+        dispatch(
+          setAlert({ variant: "danger", message: postErrors[0].message })
+        );
+      else dispatch(setValidationErrors(postErrors));
+    }
+
     return { success: false, errors: postErrors || [] };
   }
 

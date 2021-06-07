@@ -9,8 +9,3 @@ export const selectPasswordError = (state) =>
   selectNewPassword(state).validationErrors.filter(
     ({ path }) => path.length == 1 && path[0] === "password"
   )[0]?.message;
-
-export const selectAlertError = (state) =>
-  selectNewPassword(state).validationErrors.filter(
-    ({ path }) => path.length == 1 && path[0] === "alert"
-  )[0]?.message;

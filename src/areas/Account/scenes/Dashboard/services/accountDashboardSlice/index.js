@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getLogoutApi, getEmailVerificationApi } from "./api.js";
 
+import { setAlert } from "../../../../../../components/AlertSystem/services/alertSystemSlice";
 import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
 
 export const getEmailVerification = createAsyncThunk(
@@ -12,9 +13,14 @@ export const getEmailVerification = createAsyncThunk(
       dispatch(setErrors([]));
       return true;
     } else {
-      if (data.error) {
-        dispatch(setErrors([data.error]));
+      if (data.errors) {
+        if (data.errors[0].path[0] === "alert")
+          dispatch(
+            setAlert({ variant: "danger", message: data.errors[0].message })
+          );
+        else dispatch(setErrors([data.error]));
       }
+
       rejectWithValue();
     }
   }

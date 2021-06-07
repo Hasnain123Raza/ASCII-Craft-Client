@@ -3,8 +3,3 @@ export const selectEmailVerification = (state) =>
 
 export const selectGetEmailVerificationRequestStatus = (state) =>
   selectEmailVerification(state).getEmailVerificationRequestStatus;
-
-export const selectAlertError = (state) =>
-  selectEmailVerification(state).errors.filter(
-    ({ path }) => path.length === 1 && path[0] === "alert"
-  )[0]?.message;

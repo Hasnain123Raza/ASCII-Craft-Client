@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import createFormSchema from "../createFormSchema.js";
 import { postCreateArtApi } from "./api.js";
+import { setAlert } from "../../../../../../components/AlertSystem/services/alertSystemSlice";
 import { resetAuthentication } from "../../../../../../services/authenticatedSlice";
 import processPostFormRequest from "../../../../../../services/functions/processPostFormRequest.js";
 

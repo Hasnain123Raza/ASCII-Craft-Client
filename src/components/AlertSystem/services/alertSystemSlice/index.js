@@ -13,7 +13,8 @@ const alertSystemSlice = createSlice({
     },
 
     setAlert: (state, action) => {
-      state.alert = action.payload;
+      if (Boolean(action)) state.alert = action.payload;
+      else return { ...initialState };
     },
   },
 });
