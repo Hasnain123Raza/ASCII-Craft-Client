@@ -1,29 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useQuery from "../../../../services/hooks/useQuery.js";
 
 import { getProfile, reset } from "./services/accountProfileSlice";
 import {
   selectUsername,
-  selectRecentSimplifiedArts,
   selectTotalArtsCreated,
+  selectCreatedArts,
+  selectTotalArtsLiked,
+  selectLikedArts,
   selectGetProfileRequestStatus,
 } from "./services/accountProfileSlice/selectors.js";
 
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import GetRequestCard from "../../../../components/GetRequestCard";
-import ArtCard from "../../../../components/ArtCard";
+import ArtHighlights from "./components/ArtHighlights";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const query = useQuery();
   const { userId } = useParams();
 
   const username = useSelector(selectUsername);
-  const recentSimplifiedArts = useSelector(selectRecentSimplifiedArts);
   const totalArtsCreated = useSelector(selectTotalArtsCreated);
+  const createdArts = useSelector(selectCreatedArts);
+  const createdArtsQuery = useQuery();
+  createdArtsQuery.set("createdByUserId", userId);
+  const browseCreatedArtsLink = `/art/browse?${createdArtsQuery.toString()}`;
+
+  const totalArtsLiked = useSelector(selectTotalArtsLiked);
+  const likedArts = useSelector(selectLikedArts);
+  const likedArtsQuery = useQuery();
+  likedArtsQuery.set("likedByUserId", userId);
+  const browseLikedArtsLink = `/art/browse?${likedArtsQuery.toString()}`;
 
   const initiateLoadingRequest = () => dispatch(getProfile(userId));
   const loadingRequestStatus = useSelector(selectGetProfileRequestStatus);
@@ -44,53 +52,18 @@ export default function Profile() {
             <hr />
 
             <h2>Creations</h2>
-            <Card>
-              <Card.Body>
-                <Container>
-                  <Row>
-                    {totalArtsCreated > 0 ? (
-                      recentSimplifiedArts.map(
-                        (simplifiedArt, simplifiedArtIndex) => (
-                          <Col key={simplifiedArtIndex} md={4}>
-                            <ArtCard simplifiedArt={simplifiedArt} />
-                          </Col>
-                        )
-                      )
-                    ) : (
-                      <Col>
-                        <h2
-                          className="text-muted"
-                          style={{ textAlign: "center" }}
-                        >
-                          Uh oh... There are no arts
-                        </h2>
-                      </Col>
-                    )}
-                  </Row>
-                </Container>
-              </Card.Body>
-            </Card>
-
-            {totalArtsCreated > 0 &&
-              (totalArtsCreated <= 3 ? (
-                <div className="d-flex mt-2">
-                  Total Arts: {totalArtsCreated}
-                </div>
-              ) : (
-                <div className="d-flex mt-2">
-                  Total Arts: {totalArtsCreated}
-                  <Button
-                    className="ml-auto"
-                    variant="success"
-                    onClick={() => {
-                      query.set("userId", userId);
-                      history.push(`/art/browse?${query.toString()}`);
-                    }}
-                  >
-                    Browse All
-                  </Button>
-                </div>
-              ))}
+            <ArtHighlights
+              highlightArts={createdArts}
+              totalArts={totalArtsCreated}
+              browseLink={browseCreatedArtsLink}
+            />
+            <br />
+            <h2>Liked</h2>
+            <ArtHighlights
+              highlightArts={likedArts}
+              totalArts={totalArtsLiked}
+              browseLink={browseLikedArtsLink}
+            />
           </div>
         )}
       />

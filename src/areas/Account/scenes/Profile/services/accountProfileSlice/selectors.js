@@ -9,20 +9,13 @@ export const selectUsername = (state) => selectProfileData(state).username;
 export const selectTotalArtsCreated = (state) =>
   selectProfileData(state).totalArtsCreated;
 
-export const selectRecentSimplifiedArts = (state) =>
-  selectProfileData(state).recentSimplifiedArts;
+export const selectCreatedArts = (state) =>
+  selectProfileData(state).createdArts;
 
-export const selectRecentSimplifiedArtByIndex = (index) => (state) =>
-  selectRecentSimplifiedArts(state)[index];
+export const selectTotalArtsLiked = (state) =>
+  selectProfileData(state).totalArtsLiked;
 
-export const selectRecentSimplifiedArtIdByIndex = (index) => (state) =>
-  selectRecentSimplifiedArtByIndex(index)(state)._id;
-
-export const selectRecentSimplifiedArtTitleByIndex = (index) => (state) =>
-  selectRecentSimplifiedArtByIndex(index)(state).title;
-
-export const selectRecentSimplifiedArtDescriptionByIndex = (index) => (state) =>
-  selectRecentSimplifiedArtByIndex(index)(state).description;
+export const selectLikedArts = (state) => selectProfileData(state).likedArts;
 
 export const selectGetProfileRequestStatus = (state) =>
   selectProfile(state).getProfileRequestStatus;
