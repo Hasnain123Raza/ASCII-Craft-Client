@@ -89,8 +89,8 @@ export default function Header() {
   const { width } = useWindowSize();
 
   return (
-    <div className="header pbc">
-      <Navbar variant="dark">
+    <div className="header">
+      <Navbar variant="dark" bg="dark">
         <Navbar.Brand>ASCII-CRAFT</Navbar.Brand>
         {width > 576 ? <NonMobileHeaderLinks /> : <MobileHeaderLinks />}
       </Navbar>

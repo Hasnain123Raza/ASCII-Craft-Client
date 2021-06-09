@@ -4,7 +4,7 @@ import "./style.css";
 
 export default function Footer() {
   return (
-    <div className="footer pbc p-3">
+    <div className="footer bg-dark p-3">
       <Container fluid>
         {/* Columns have extra divs to hold link items so that the link items don't span the entire width of the column. */}
         <Row style={{ textAlign: "center" }}>

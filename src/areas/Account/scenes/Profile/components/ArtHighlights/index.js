@@ -42,7 +42,7 @@ export default function ArtHighlights({
             Total Arts: {totalArts}
             <Button
               className="ml-auto"
-              variant="success"
+              variant="primary"
               onClick={() => {
                 history.push(browseLink);
               }}

@@ -109,7 +109,11 @@ export default function Open() {
                   onClick={initiateLikeRequest}
                 >
                   {showLoadingLikeButton ? "Loading..." : "Like"}
-                  <Badge className="ml-2" variant="light">
+                  <Badge
+                    className="ml-2"
+                    style={{ color: "#000" }}
+                    variant="light"
+                  >
                     {hasLiked && "+"}
                     {likes}
                   </Badge>

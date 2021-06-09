@@ -6,8 +6,8 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 
-import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./bootstrap.min.css";
 
 export default function App() {
   const dispatch = useDispatch();

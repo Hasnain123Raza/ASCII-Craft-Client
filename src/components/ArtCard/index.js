@@ -11,7 +11,7 @@ export default function ArtCard(props) {
   const { _id, title, description } = simplifiedArt;
 
   return (
-    <Card className="h-100">
+    <Card className="h-100" bg="light" text="dark">
       <Card.Body style={{ textAlign: "center" }}>
         <h5>{title}</h5>
         <hr />
