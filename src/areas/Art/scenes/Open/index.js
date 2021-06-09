@@ -1,20 +1,36 @@
 import GetRequestCard from "../../../../components/GetRequestCard";
-import { Card, Button } from "react-bootstrap";
+import {
+  Card,
+  ButtonToolbar,
+  ButtonGroup,
+  Button,
+  Badge,
+} from "react-bootstrap";
 import PostRequestButton from "../../../../components/PostRequestButton";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useQuery from "../../../../services/hooks/useQuery.js";
+import useWindowSize from "../../../../services/hooks/useWindowSize.js";
 
-import { getArt, getDeleteArt, reset } from "./services/artOpenSlice";
 import {
+  getArt,
+  getDeleteArt,
+  getLikeArt,
+  reset,
+} from "./services/artOpenSlice";
+import {
+  selectHasLiked,
   selectCreatorId,
+  selectId,
   selectTitle,
   selectDescription,
   selectContent,
+  selectLikes,
   selectGetArtRequestStatus,
   selectGetDeleteArtRequestStatus,
+  selectGetLikeArtRequestStatus,
 } from "./services/artOpenSlice/selectors.js";
 
 import {
@@ -26,13 +42,16 @@ export default function Open() {
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();
+  const { width } = useWindowSize();
 
   const { artId: queriedArtId } = useParams();
 
+  const hasLiked = useSelector(selectHasLiked);
   const creatorId = useSelector(selectCreatorId);
   const title = useSelector(selectTitle);
   const description = useSelector(selectDescription);
   const content = useSelector(selectContent);
+  const likes = useSelector(selectLikes);
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userId = useSelector(selectUserId);
@@ -45,6 +64,11 @@ export default function Open() {
 
   const initiateDeleteRequest = () => dispatch(getDeleteArt(queriedArtId));
   const deleteRequestStatus = useSelector(selectGetDeleteArtRequestStatus);
+
+  const initiateLikeRequest = () =>
+    dispatch(getLikeArt({ artId: queriedArtId, like: !hasLiked }));
+  const likeRequestStatus = useSelector(selectGetLikeArtRequestStatus);
+  const showLoadingLikeButton = likeRequestStatus === "pending";
 
   useEffect(() => {
     initiateLoadingRequest();
@@ -69,29 +93,35 @@ export default function Open() {
               </Card.Body>
             </Card>
 
-            <div className="my-4 d-flex">
-              <Button
-                className="mr-2"
-                variant="success"
-                onClick={() =>
-                  history.push(
-                    `/account/profile/${creatorId}?${query.toString()}`
-                  )
-                }
+            <ButtonToolbar
+              className={
+                width > 576 ? "mt-3" : "flex-column align-items-center"
+              }
+              aria-label="controls"
+            >
+              <ButtonGroup
+                className={width > 576 ? "" : "mt-3"}
+                aria-label="art"
               >
-                Creator Profile
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => navigator.clipboard.writeText(content)}
-              >
-                Copy
-              </Button>
-
-              <div className="ml-auto">
+                <Button
+                  variant={showLoadingLikeButton ? "secondary" : "primary"}
+                  disabled={showLoadingLikeButton || !isAuthenticated}
+                  onClick={initiateLikeRequest}
+                >
+                  {showLoadingLikeButton ? "Loading..." : "Like"}
+                  <Badge className="ml-2" variant="light">
+                    {hasLiked && "+"}
+                    {likes}
+                  </Badge>
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigator.clipboard.writeText(content)}
+                >
+                  Copy
+                </Button>
                 {isCreator && (
                   <PostRequestButton
-                    className="mr-2"
                     idleText="Delete"
                     idleVariant="danger"
                     initiateLoadingRequest={initiateDeleteRequest}
@@ -99,16 +129,32 @@ export default function Open() {
                     redirectLink={`/art/browse?${query.toString()}`}
                   />
                 )}
+              </ButtonGroup>
+
+              <ButtonGroup
+                className={width > 576 ? "ml-auto" : "mt-3"}
+                aria-label="navigation"
+              >
+                <Button
+                  variant="success"
+                  onClick={() =>
+                    history.push(
+                      `/account/profile/${creatorId}?${query.toString()}`
+                    )
+                  }
+                >
+                  Creator
+                </Button>
                 <Button
                   variant="primary"
                   onClick={() => {
                     history.push(`/art/browse?${query.toString()}`);
                   }}
                 >
-                  Back To Browse
+                  Browse
                 </Button>
-              </div>
-            </div>
+              </ButtonGroup>
+            </ButtonToolbar>
           </div>
         )}
       />
