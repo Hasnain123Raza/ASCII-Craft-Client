@@ -48,7 +48,15 @@ export default function Browse() {
 
   if (pageConflict) dispatch(setCurrentPage(queriedPage));
 
-  const queriedUserId = query.get("userId");
+  const createdByUserId = {
+    type: "createdByUserId",
+    payload: query.get("createdByUserId"),
+  };
+  const likedByUserId = {
+    type: "likedByUserId",
+    payload: query.get("likedByUserId"),
+  };
+  const selectors = [createdByUserId, likedByUserId];
 
   const initiateLoadingRequest = () =>
     dispatch(
@@ -56,7 +64,7 @@ export default function Browse() {
         pageOffset: currentPage - 1,
         pageSize: cardsPerRow * totalRows,
         queriedPage,
-        userId: queriedUserId,
+        selectors,
       })
     );
 
@@ -69,7 +77,7 @@ export default function Browse() {
   useEffect(() => {
     const loadingRequestPromise = initiateLoadingRequest();
     return () => loadingRequestPromise.abort();
-  }, [currentPage, queriedUserId]);
+  }, [currentPage]);
 
   return (
     <div className="art-browse d-flex flex-column" style={{ flex: 1 }}>

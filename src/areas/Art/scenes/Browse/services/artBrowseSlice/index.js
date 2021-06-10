@@ -4,8 +4,8 @@ import { selectArtCount, selectCurrentPage } from "./selectors.js";
 
 export const getArtCount = createAsyncThunk(
   "browse/getArtCount",
-  async (userId, { rejectWithValue }) => {
-    const { success, payload } = await getArtCountApi(userId);
+  async (selectors, { rejectWithValue }) => {
+    const { success, payload } = await getArtCountApi(selectors);
     if (!success) {
       return rejectWithValue();
     } else {
@@ -16,11 +16,11 @@ export const getArtCount = createAsyncThunk(
 
 export const getSimplifiedArts = createAsyncThunk(
   "browse/getSimplifiedArts",
-  async ({ pageOffset, pageSize, userId }, { rejectWithValue }) => {
+  async ({ pageOffset, pageSize, selectors }, { rejectWithValue }) => {
     const { success, payload } = await getSimplifiedArtsApi(
       pageOffset,
       pageSize,
-      userId
+      selectors
     );
     if (!success) {
       return rejectWithValue();
@@ -33,15 +33,15 @@ export const getSimplifiedArts = createAsyncThunk(
 export const loadResources = createAsyncThunk(
   "browse/loadResources",
   async (
-    { pageOffset, pageSize, queriedPage, userId },
+    { pageOffset, pageSize, queriedPage, selectors },
     { getState, dispatch }
   ) => {
     const hasLoadedArtCount = selectArtCount(getState()) !== -1;
-    if (!hasLoadedArtCount) await dispatch(getArtCount(userId));
+    if (!hasLoadedArtCount) await dispatch(getArtCount(selectors));
 
     const isPageConflict = selectCurrentPage(getState()) !== queriedPage;
     if (!isPageConflict)
-      await dispatch(getSimplifiedArts({ pageOffset, pageSize, userId }));
+      await dispatch(getSimplifiedArts({ pageOffset, pageSize, selectors }));
   }
 );
 

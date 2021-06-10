@@ -1,21 +1,28 @@
-export async function getArtCountApi(userId) {
-  const urlSearchParams = new URLSearchParams();
-  if (Boolean(userId)) urlSearchParams.set("userId", userId);
+export async function getArtCountApi(selectors) {
+  const response = await fetch("/api/art/browse/artCount", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ selectors }),
+  });
 
-  const response = await fetch(
-    `/api/art/browse/artCount?${urlSearchParams.toString()}`
-  );
   const data = await response.json();
   return data;
 }
 
-export async function getSimplifiedArtsApi(pageOffset, pageSize, userId) {
-  const urlSearchParams = new URLSearchParams();
-  if (Boolean(userId)) urlSearchParams.set("userId", userId);
-
+export async function getSimplifiedArtsApi(pageOffset, pageSize, selectors) {
   const response = await fetch(
-    `/api/art/browse/simplifiedArts/${pageOffset}/${pageSize}?${urlSearchParams.toString()}`
+    `/api/art/browse/simplifiedArts/${pageOffset}/${pageSize}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selectors }),
+    }
   );
+
   const data = await response.json();
   return data;
 }
